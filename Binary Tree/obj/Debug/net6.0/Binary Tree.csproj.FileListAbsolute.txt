@@ -1,0 +1,15 @@
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Binary Tree.exe
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Binary Tree.deps.json
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Binary Tree.runtimeconfig.json
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Binary Tree.dll
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\ref\Binary Tree.dll
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Binary Tree.pdb
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.csproj.AssemblyReference.cache
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.AssemblyInfoInputs.cache
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.AssemblyInfo.cs
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.csproj.CoreCompileInputs.cache
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.dll
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\ref\Binary Tree.dll
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.pdb
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.genruntimeconfig.cache
