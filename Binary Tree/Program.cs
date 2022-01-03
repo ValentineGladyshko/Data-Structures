@@ -1,22 +1,18 @@
 ﻿using System;
 using DataStructures;
+using System.Threading.Tasks;
+using System.Threading;
 
 Random random = new Random();
+ArrayOperator arrayOperator = new ArrayOperator();
 
-BinaryTree binaryTree = new BinaryTree();
-
-for (int i = 0; i < 100; i++)
+Parallel.For(0, 10000, i =>
 {
-    binaryTree.Insert(random.Next(70));
-}
+    BinaryTree binaryTree = new BinaryTree();
 
-Console.WriteLine();
-Console.WriteLine(binaryTree.Remove(45));
-Console.WriteLine(binaryTree.Minimum());
-Console.WriteLine(binaryTree.Maximum());
-
-binaryTree.InfixTraverse();
-Console.WriteLine();   
-binaryTree.PrefixTraverse();
-Console.WriteLine();
-binaryTree.PostfixTraverse();
+    for (int j = 0; j < 10000; j++)
+    {
+        binaryTree.Insert(random.Next());
+    }
+    Console.WriteLine(arrayOperator.IsSorted(binaryTree.InfixTraverse()));
+});

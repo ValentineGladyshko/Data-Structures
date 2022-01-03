@@ -164,67 +164,71 @@ namespace DataStructures
 			}
 		}
 
-		public void InfixTraverse()
+		public List<int> InfixTraverse()
 		{
+			List<int> result = new List<int>();
 			if (Value == null)
 			{
-				return;
+				return result;
 			}
 
 			if (LeftNode != null)
 			{
-				LeftNode.InfixTraverse();
+				result.AddRange(LeftNode.InfixTraverse());
 			}
 
-			Console.Write(Value);
-			Console.Write(" ");
+			result.Add((int)Value);
 
 			if (RightNode != null)
 			{
-				RightNode.InfixTraverse();
+				result.AddRange(RightNode.InfixTraverse());
 			}
+			return result;
 		}
 
-		public void PrefixTraverse()
+		public List<int> PrefixTraverse()
 		{
+			List<int> result = new List<int>();
 			if (Value == null)
 			{
-				return;
+				return result;
 			}
 
-			Console.Write(Value);
-			Console.Write(" ");
+			result.Add((int)Value);
 
 			if (LeftNode != null)
 			{
-				LeftNode.PrefixTraverse();
+				result.AddRange(LeftNode.PrefixTraverse());
 			}
 
 			if (RightNode != null)
 			{
-				RightNode.PrefixTraverse();
+				result.AddRange(RightNode.PrefixTraverse());
 			}
+			return result;
 		}
 
-		public void PostfixTraverse()
+		public List<int> PostfixTraverse()
 		{
+			List<int> result = new List<int>();
 			if (Value == null)
 			{
-				return;
+				return result;
 			}
 
 			if (LeftNode != null)
 			{
-				LeftNode.PostfixTraverse();
+				result.AddRange(LeftNode.PostfixTraverse());
 			}
 
 			if (RightNode != null)
 			{
-				RightNode.PostfixTraverse();
+				result.AddRange(RightNode.PostfixTraverse());
 			}
 
-			Console.Write(Value);
-			Console.Write(" ");
+			result.Add((int)Value);
+
+			return result;
 		}
 
 		public void Traverse()
