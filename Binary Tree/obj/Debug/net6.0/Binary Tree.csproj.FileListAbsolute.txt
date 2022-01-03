@@ -13,3 +13,6 @@ C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary 
 C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\ref\Binary Tree.dll
 C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.pdb
 C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.genruntimeconfig.cache
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Data Structures Library.dll
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\bin\Debug\net6.0\Data Structures Library.pdb
+C:\Users\55cou\source\repos\Data-Structures\Binary Tree\obj\Debug\net6.0\Binary Tree.csproj.CopyComplete

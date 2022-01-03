@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "Data Structures Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Data Structures Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Data Structures Library.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Data Structures Library/1.0.0": {
+      "type": "project",
+      "path": "../Data Structures Library/Data Structures Library.csproj",
+      "msbuildProject": "../Data Structures Library/Data Structures Library.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "Data Structures Library >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\55cou\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj": {
+              "projectPath": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

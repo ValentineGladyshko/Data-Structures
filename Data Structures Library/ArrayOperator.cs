@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace DataStructures
 {
 	public class ArrayOperator

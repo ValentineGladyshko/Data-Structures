@@ -10,11 +10,21 @@
         "runtime": {
           "Binary Tree.dll": {}
         }
+      },
+      "Data Structures Library/1.0.0": {
+        "runtime": {
+          "Data Structures Library.dll": {}
+        }
       }
     }
   },
   "libraries": {
     "Binary Tree/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Data Structures Library/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
