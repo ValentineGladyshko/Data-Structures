@@ -8,28 +8,118 @@ Random random = new Random();
 ArrayOperator arrayOperator = new ArrayOperator();
 
 
-Stopwatch stopwatch = Stopwatch.StartNew();
-int notSorted = 0;
-int notBalanced = 0;
+List<AVLTree> AVLTrees = new List<AVLTree>();
+List<BinaryTree> binaryTrees = new List<BinaryTree>();
 
-Parallel.For(0, 1000, i =>
+
+Parallel.For(0, 100, i =>
 {
     AVLTree AVLTree = new AVLTree();
+    BinaryTree binaryTree = new BinaryTree();
 
-    for (int j = 0; j < 10000; j++)
+    for (int j = 0; j < 1000000; j++)
     {
-        AVLTree.Insert(random.Next());
+        int temp = random.Next(100000);
+        AVLTree.Insert(temp);
+        binaryTree.Insert(temp);
     }
-    if (!arrayOperator.IsSorted(AVLTree.InfixTraverse()))
-        notSorted++;
-    if (AVLTree.BalanceFactor() > 1 || AVLTree.BalanceFactor() < -1)
-    {
-        notBalanced++;
-        Console.WriteLine(AVLTree.BalanceFactor());
-    }
+    AVLTrees.Add(AVLTree);
+    binaryTrees.Add(binaryTree);
 });
 
-Console.WriteLine("Not sorted: " + notSorted);
-Console.WriteLine("Not balanced: " + notBalanced);
+Stopwatch stopwatch = Stopwatch.StartNew();
+foreach (var AVLTree in AVLTrees)
+{
+    AVLTree.InfixTraverse();
+};
 stopwatch.Stop();
-Console.WriteLine(stopwatch.ElapsedMilliseconds / 1000.0);
+Console.WriteLine("Infix traverse in AVL tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var AVLTree in AVLTrees)
+{
+    AVLTree.PrefixTraverse();
+};
+stopwatch.Stop();
+Console.WriteLine("Prefix traverse in AVL tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var AVLTree in AVLTrees)
+{
+    AVLTree.PostfixTraverse();
+};
+stopwatch.Stop();
+Console.WriteLine("Postfix traverse in AVL tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var AVLTree in AVLTrees)
+{
+    AVLTree.Insert(500000);
+};
+stopwatch.Stop();
+Console.WriteLine("Insert in AVL tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var AVLTree in AVLTrees)
+{
+    AVLTree.Find(500000);
+};
+stopwatch.Stop();
+Console.WriteLine("Find in AVL tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var AVLTree in AVLTrees)
+{
+    AVLTree.Remove(500000);
+};
+stopwatch.Stop();
+Console.WriteLine("Remove in AVL tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var binaryTree in binaryTrees)
+{
+    binaryTree.InfixTraverse();
+};
+stopwatch.Stop();
+Console.WriteLine("Infix traverse in Binary tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+
+stopwatch.Restart();
+foreach (var binaryTree in binaryTrees)
+{
+    binaryTree.PrefixTraverse();
+};
+stopwatch.Stop();
+Console.WriteLine("Prefix traverse in Binary tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var binaryTree in binaryTrees)
+{
+    binaryTree.PostfixTraverse();
+};
+stopwatch.Stop();
+Console.WriteLine("Postfix traverse in Binary tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var binaryTree in binaryTrees)
+{
+    binaryTree.Insert(500000);
+};
+stopwatch.Stop();
+Console.WriteLine("Insert in Binary tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var binaryTree in binaryTrees)
+{
+    binaryTree.Find(500000);
+};
+stopwatch.Stop();
+Console.WriteLine("Find in Binary tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");
+
+stopwatch.Restart();
+foreach (var binaryTree in binaryTrees)
+{
+    binaryTree.Remove(500000);
+};
+stopwatch.Stop();
+Console.WriteLine("Remove in Binary tree: " + stopwatch.ElapsedMilliseconds / 1000.0 + "s");

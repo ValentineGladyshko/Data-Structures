@@ -68,34 +68,6 @@ namespace DataStructures
 			}
 		}
 
-		//public void RecursiveFixHeight()
-		//{
-		//	if (LeftNode != null)
-		//	{
-		//		LeftNode.RecursiveFixHeight();
-		//	}
-		//	if (RightNode != null)
-		//	{
-		//		RightNode.RecursiveFixHeight();
-		//	}
-		//	if (LeftNode != null && RightNode != null)
-		//	{
-		//		Height = (LeftNode.Height > RightNode.Height ? LeftNode.Height : RightNode.Height) + 1;
-		//	}
-		//	else if (LeftNode == null && RightNode != null)
-		//	{
-		//		Height = RightNode.Height + 1;
-		//	}
-		//	else if (LeftNode != null && RightNode == null)
-		//	{
-		//		Height = LeftNode.Height + 1;
-		//	}
-		//	else
-		//	{
-		//		Height = 1;
-		//	}
-		//}
-
 		public void RotateLeft()
 		{
 			if (RightNode != null)
@@ -177,6 +149,92 @@ namespace DataStructures
 				{
 					RightNode.Insert(value);
 				}
+			}
+			Balance();
+		}
+
+		public bool Remove(int value)
+		{
+			return Remove(value, this);
+		}
+
+		public bool Remove(int value, AVLTree parentNode)
+		{
+			if (Value == null)
+			{
+				return false;
+			}
+			else if (value < Value)
+			{
+				if (LeftNode == null)
+					return false;
+				else return LeftNode.Remove(value, this);
+			}
+			else if (value > Value)
+			{
+				if (RightNode == null)
+					return false;
+				else return RightNode.Remove(value, this);
+			}
+			else if (value == Value)
+			{
+				if (LeftNode == null && RightNode == null)
+				{
+					if (parentNode.LeftNode == this)
+					{
+						parentNode.LeftNode = null;
+					}
+					if (parentNode.RightNode == this)
+					{
+						parentNode.RightNode = null;
+					}
+					Value = null;
+					return true;
+				}
+				else if (LeftNode != null && RightNode == null)
+				{
+					Value = LeftNode.Value;
+					LeftNode = LeftNode.LeftNode;
+					Balance();
+					return true;
+				}
+				else if (LeftNode == null && RightNode != null)
+				{
+					Value = RightNode.Value;
+					RightNode = RightNode.RightNode;
+					Balance();
+					return true;
+				}
+				else if (LeftNode != null && RightNode != null)
+				{
+					if (RightNode.LeftNode == null)
+					{
+						Value = RightNode.Value;
+						RightNode = RightNode.RightNode;
+						Balance();
+						return true;
+					}
+					else
+					{
+						Value = RightNode.MinimumDelete(this);
+						return true;
+					}
+				}
+			}
+			Balance();
+			return false;
+		}
+
+		public int? MinimumDelete(AVLTree parentNode)
+		{
+			if (LeftNode != null)
+			{
+				return LeftNode.MinimumDelete(this);
+			}
+			else
+			{
+				parentNode.LeftNode = null;
+				return Value;
 			}
 			Balance();
 		}
