@@ -68,45 +68,85 @@ namespace DataStructures
 			}
 		}
 
+		//public void RecursiveFixHeight()
+		//{
+		//	if (LeftNode != null)
+		//	{
+		//		LeftNode.RecursiveFixHeight();
+		//	}
+		//	if (RightNode != null)
+		//	{
+		//		RightNode.RecursiveFixHeight();
+		//	}
+		//	if (LeftNode != null && RightNode != null)
+		//	{
+		//		Height = (LeftNode.Height > RightNode.Height ? LeftNode.Height : RightNode.Height) + 1;
+		//	}
+		//	else if (LeftNode == null && RightNode != null)
+		//	{
+		//		Height = RightNode.Height + 1;
+		//	}
+		//	else if (LeftNode != null && RightNode == null)
+		//	{
+		//		Height = LeftNode.Height + 1;
+		//	}
+		//	else
+		//	{
+		//		Height = 1;
+		//	}
+		//}
+
 		public void RotateLeft()
 		{
-			if (LeftNode != null && RightNode != null)
+			if (RightNode != null)
 			{
-				if (RightNode.LeftNode != null && RightNode.RightNode != null)
-				{
-					AVLTree temp = new AVLTree(this);
+				AVLTree temp = new AVLTree(this);
 
-					if (temp.RightNode != null)
-					{
-						Value = temp.RightNode.Value;
-						RightNode = temp.RightNode.RightNode;
-						temp.RightNode = temp.RightNode.LeftNode;
-						LeftNode = temp;
-						FixHeight();
-						LeftNode.FixHeight();
-					}
+				if (temp.RightNode != null)
+				{
+					Value = temp.RightNode.Value;
+					RightNode = temp.RightNode.RightNode;
+					temp.RightNode = temp.RightNode.LeftNode;
+					LeftNode = temp;
+					LeftNode.FixHeight();
+					FixHeight();
 				}
 			}
 		}
 
 		public void RotateRight()
 		{
-			if (LeftNode != null && RightNode != null)
+			if (LeftNode != null)
 			{
-				if (LeftNode.LeftNode != null && LeftNode.RightNode != null)
-				{
-					AVLTree temp = new AVLTree(this);
+				AVLTree temp = new AVLTree(this);
 
-					if (temp.LeftNode != null)
-					{
-						Value = temp.LeftNode.Value;
-						LeftNode = temp.LeftNode.LeftNode;
-						temp.LeftNode = temp.LeftNode.RightNode;
-						RightNode = temp;
-						FixHeight();
-						RightNode.FixHeight();
-					}
+				if (temp.LeftNode != null)
+				{
+					Value = temp.LeftNode.Value;
+					LeftNode = temp.LeftNode.LeftNode;
+					temp.LeftNode = temp.LeftNode.RightNode;
+					RightNode = temp;
+					RightNode.FixHeight();
+					FixHeight();
 				}
+			}
+		}
+
+		public void Balance()
+		{
+			FixHeight();
+			if (BalanceFactor() == 2 && RightNode != null)
+			{
+				if (RightNode.BalanceFactor() < 0)
+					RightNode.RotateRight();
+				RotateLeft();
+			}
+
+			if (BalanceFactor() == -2 && LeftNode != null)
+			{
+				if (LeftNode.BalanceFactor() > 0)
+					LeftNode.RotateLeft();
+				RotateRight();
 			}
 		}
 
@@ -119,17 +159,26 @@ namespace DataStructures
 			else if (value < Value)
 			{
 				if (LeftNode == null)
+				{
 					LeftNode = new AVLTree(value);
-				else LeftNode.Insert(value);
+				}
+				else
+				{
+					LeftNode.Insert(value);
+				}
 			}
 			else if (value > Value)
 			{
 				if (RightNode == null)
+				{
 					RightNode = new AVLTree(value);
-				else RightNode.Insert(value);
+				}
+				else
+				{
+					RightNode.Insert(value);
+				}
 			}
-			else
-			{ }
+			Balance();
 		}
 
 		public bool Find(int value)
@@ -267,6 +316,9 @@ namespace DataStructures
 				Console.Write(RightNode.Value);
 				Console.Write(" ");
 			}
+			Console.Write("height: ");
+			Console.Write(Height);
+			Console.Write(" ");
 			Console.WriteLine(" ");
 
 			if (LeftNode != null)
