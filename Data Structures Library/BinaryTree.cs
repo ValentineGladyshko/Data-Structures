@@ -113,9 +113,18 @@ namespace DataStructures
 					return true;
 				}
 				else if (LeftNode != null && RightNode != null)
-				{				
+				{
+					if (RightNode.LeftNode == null)
+					{
+						Value = RightNode.Value;
+						RightNode = RightNode.RightNode;
+						return true;
+					}
+					else
+					{
 						Value = RightNode.MinimumDelete(this);
 						return true;
+					}
 				}
 			}
 			return false;

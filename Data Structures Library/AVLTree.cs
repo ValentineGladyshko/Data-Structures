@@ -168,13 +168,23 @@ namespace DataStructures
 			{
 				if (LeftNode == null)
 					return false;
-				else return LeftNode.Remove(value, this);
+				else
+				{
+					bool result = LeftNode.Remove(value, this);
+					Balance();
+					return result;
+				}
 			}
 			else if (value > Value)
 			{
 				if (RightNode == null)
 					return false;
-				else return RightNode.Remove(value, this);
+				else
+				{
+					bool result = RightNode.Remove(value, this);
+					Balance();
+					return result;
+				}
 			}
 			else if (value == Value)
 			{
@@ -194,6 +204,7 @@ namespace DataStructures
 				else if (LeftNode != null && RightNode == null)
 				{
 					Value = LeftNode.Value;
+					RightNode = LeftNode.RightNode;
 					LeftNode = LeftNode.LeftNode;
 					Balance();
 					return true;
@@ -201,6 +212,7 @@ namespace DataStructures
 				else if (LeftNode == null && RightNode != null)
 				{
 					Value = RightNode.Value;
+					LeftNode = RightNode.LeftNode;
 					RightNode = RightNode.RightNode;
 					Balance();
 					return true;
@@ -217,11 +229,12 @@ namespace DataStructures
 					else
 					{
 						Value = RightNode.MinimumDelete(this);
+						RightNode.Balance();
+						Balance();
 						return true;
 					}
 				}
 			}
-			Balance();
 			return false;
 		}
 
@@ -229,14 +242,15 @@ namespace DataStructures
 		{
 			if (LeftNode != null)
 			{
-				return LeftNode.MinimumDelete(this);
+				int? result = LeftNode.MinimumDelete(this);				
+				Balance();
+				return result;
 			}
 			else
 			{
-				parentNode.LeftNode = null;
+				parentNode.LeftNode = RightNode;
 				return Value;
 			}
-			Balance();
 		}
 
 		public bool Find(int value)

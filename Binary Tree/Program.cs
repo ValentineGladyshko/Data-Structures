@@ -23,7 +23,7 @@ binaryTree.Insert(23);
 
 //binaryTree.Traverse();
 Console.WriteLine(arrayOperator.ToString(binaryTree.InfixTraverse()));
-binaryTree.Remove(25);
+binaryTree.Remove(14);
 //binaryTree.Traverse();
 Console.WriteLine(arrayOperator.ToString(binaryTree.InfixTraverse()));
 
