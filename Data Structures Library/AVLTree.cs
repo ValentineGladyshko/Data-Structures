@@ -288,6 +288,7 @@ namespace DataStructures
 				return Value;
 			}
 		}
+
 		public int? Maximum()
 		{
 			if (RightNode != null)

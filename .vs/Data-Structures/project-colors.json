@@ -20,7 +20,12 @@
       "ProjectGuid": "64961f6d-7eed-415e-ba97-2cd92bd4d768",
       "DisplayName": "Data Structures Library",
       "ColorIndex": 2
+    },
+    "a68935f3-8f66-41ae-9e98-8a6318b839fa": {
+      "ProjectGuid": "a68935f3-8f66-41ae-9e98-8a6318b839fa",
+      "DisplayName": "Red-Black Tree",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 4
 }

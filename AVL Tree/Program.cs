@@ -11,12 +11,12 @@ List<AVLTree> AVLTrees = new List<AVLTree>();
 List<BinaryTree> binaryTrees = new List<BinaryTree>();
 
 
-Parallel.For(0, 10000, i =>
+Parallel.For(0, 1000, i =>
 {
     AVLTree AVLTree = new AVLTree();
     BinaryTree binaryTree = new BinaryTree();
 
-    for (int j = 0; j < 100000; j++)
+    for (int j = 0; j < 10000; j++)
     {
         int temp = random.Next(100000);
         AVLTree.Insert(temp);
