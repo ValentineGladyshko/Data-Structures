@@ -10,3 +10,5 @@ C:\Users\55cou\source\repos\Data-Structures\Data Structures Library\obj\Debug\ne
 C:\Users\55cou\source\repos\Data-Structures\Data Structures Library\obj\Debug\net6.0\ref\Data Structures Library.dll
 C:\Users\55cou\source\repos\Data-Structures\Data Structures Library\obj\Debug\net6.0\Data Structures Library.pdb
 C:\Users\55cou\source\repos\Data-Structures\Data Structures Library\obj\Debug\net6.0\Data Structures Library.csproj.AssemblyReference.cache
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library\obj\Debug\net6.0\Data Structures Library.dll
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library\obj\Debug\net6.0\Data Structures Library.pdb

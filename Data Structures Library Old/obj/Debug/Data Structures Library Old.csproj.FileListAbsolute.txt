@@ -1,0 +1,6 @@
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library Old\bin\Debug\Data Structures Library Old.dll
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library Old\bin\Debug\Data Structures Library Old.pdb
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library Old\obj\Debug\Data Structures Library Old.csprojAssemblyReference.cache
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library Old\obj\Debug\Data Structures Library Old.csproj.CoreCompileInputs.cache
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library Old\obj\Debug\Data Structures Library Old.dll
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\Data Structures Library Old\obj\Debug\Data Structures Library Old.pdb

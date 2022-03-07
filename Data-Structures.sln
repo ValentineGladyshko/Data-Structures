@@ -1,21 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binary Tree", "Binary Tree\Binary Tree.csproj", "{59DF707D-494C-43FF-9B65-66DFDAA288AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Structures Library Old", "Data Structures Library Old\Data Structures Library Old.csproj", "{091A0D57-CB0B-4A88-B8B9-76E6E88B770D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVL Tree Old", "AVL Tree Old\AVL Tree Old.csproj", "{52000153-00EE-4C2E-91C7-DCB5F57CEB5B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{64961F6D-7EED-415E-BA97-2CD92BD4D768} = {64961F6D-7EED-415E-BA97-2CD92BD4D768}
+		{091A0D57-CB0B-4A88-B8B9-76E6E88B770D} = {091A0D57-CB0B-4A88-B8B9-76E6E88B770D}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AVL Tree", "AVL Tree\AVL Tree.csproj", "{C7D0F46B-E75C-4588-8BD8-2F3343E66E95}"
-	ProjectSection(ProjectDependencies) = postProject
-		{64961F6D-7EED-415E-BA97-2CD92BD4D768} = {64961F6D-7EED-415E-BA97-2CD92BD4D768}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binary Tree Old", "Binary Tree Old\Binary Tree Old.csproj", "{F6AA3DDF-0E4E-4549-863F-29C10B9C5F27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data Structures Library", "Data Structures Library\Data Structures Library.csproj", "{64961F6D-7EED-415E-BA97-2CD92BD4D768}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Left-Leaning Red-Black Tree", "Left-Leaning Red-Black Tree\Left-Leaning Red-Black Tree.csproj", "{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Left-Leaning Red-Black Tree Old", "Left-Leaning Red-Black Tree Old\Left-Leaning Red-Black Tree Old.csproj", "{32456CB8-30A3-4D31-A4F3-51EC84D5EE0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +20,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59DF707D-494C-43FF-9B65-66DFDAA288AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59DF707D-494C-43FF-9B65-66DFDAA288AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59DF707D-494C-43FF-9B65-66DFDAA288AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59DF707D-494C-43FF-9B65-66DFDAA288AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7D0F46B-E75C-4588-8BD8-2F3343E66E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7D0F46B-E75C-4588-8BD8-2F3343E66E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7D0F46B-E75C-4588-8BD8-2F3343E66E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7D0F46B-E75C-4588-8BD8-2F3343E66E95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64961F6D-7EED-415E-BA97-2CD92BD4D768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64961F6D-7EED-415E-BA97-2CD92BD4D768}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64961F6D-7EED-415E-BA97-2CD92BD4D768}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64961F6D-7EED-415E-BA97-2CD92BD4D768}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{091A0D57-CB0B-4A88-B8B9-76E6E88B770D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091A0D57-CB0B-4A88-B8B9-76E6E88B770D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091A0D57-CB0B-4A88-B8B9-76E6E88B770D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091A0D57-CB0B-4A88-B8B9-76E6E88B770D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52000153-00EE-4C2E-91C7-DCB5F57CEB5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52000153-00EE-4C2E-91C7-DCB5F57CEB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52000153-00EE-4C2E-91C7-DCB5F57CEB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52000153-00EE-4C2E-91C7-DCB5F57CEB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6AA3DDF-0E4E-4549-863F-29C10B9C5F27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6AA3DDF-0E4E-4549-863F-29C10B9C5F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6AA3DDF-0E4E-4549-863F-29C10B9C5F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6AA3DDF-0E4E-4549-863F-29C10B9C5F27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32456CB8-30A3-4D31-A4F3-51EC84D5EE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32456CB8-30A3-4D31-A4F3-51EC84D5EE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32456CB8-30A3-4D31-A4F3-51EC84D5EE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32456CB8-30A3-4D31-A4F3-51EC84D5EE0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

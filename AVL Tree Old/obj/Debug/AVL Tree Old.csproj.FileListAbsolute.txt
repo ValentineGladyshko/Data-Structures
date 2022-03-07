@@ -1,0 +1,10 @@
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\bin\Debug\AVL Tree Old.exe.config
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\bin\Debug\AVL Tree Old.exe
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\bin\Debug\AVL Tree Old.pdb
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\bin\Debug\Data Structures Library Old.dll
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\bin\Debug\Data Structures Library Old.pdb
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\obj\Debug\AVL Tree Old.csprojAssemblyReference.cache
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\obj\Debug\AVL Tree Old.csproj.CoreCompileInputs.cache
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\obj\Debug\AVL Tree Old.csproj.CopyComplete
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\obj\Debug\AVL Tree Old.exe
+C:\Users\Valentine\Source\Repos\ValentineGladyshko\Data-Structures\AVL Tree Old\obj\Debug\AVL Tree Old.pdb

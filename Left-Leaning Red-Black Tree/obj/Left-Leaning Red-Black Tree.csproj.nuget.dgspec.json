@@ -1,32 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj": {}
+    "C:\\Users\\Valentine\\Source\\Repos\\ValentineGladyshko\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj": {}
   },
   "projects": {
-    "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj": {
+    "C:\\Users\\Valentine\\Source\\Repos\\ValentineGladyshko\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj",
-        "projectName": "Data Structures Library",
-        "projectPath": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj",
-        "packagesPath": "C:\\Users\\55cou\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\obj\\",
+        "projectUniqueName": "C:\\Users\\Valentine\\Source\\Repos\\ValentineGladyshko\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj",
+        "projectName": "Left-Leaning Red-Black Tree",
+        "projectPath": "C:\\Users\\Valentine\\Source\\Repos\\ValentineGladyshko\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj",
+        "packagesPath": "C:\\Users\\Valentine\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Valentine\\Source\\Repos\\ValentineGladyshko\\Data-Structures\\Left-Leaning Red-Black Tree\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\55cou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Valentine\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net60"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net60": {
             "projectReferences": {}
           }
         },
@@ -37,82 +36,13 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj",
-        "projectName": "Left-Leaning Red-Black Tree",
-        "projectPath": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Left-Leaning Red-Black Tree\\Left-Leaning Red-Black Tree.csproj",
-        "packagesPath": "C:\\Users\\55cou\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Left-Leaning Red-Black Tree\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\55cou\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net6.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {
-              "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj": {
-                "projectPath": "C:\\Users\\55cou\\source\\repos\\Data-Structures\\Data Structures Library\\Data Structures Library.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
+        "net60": {
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       },
-      "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
         }
       }
     }
