@@ -4,266 +4,307 @@ namespace DataStructures
 {
 	public class BinaryTree
 	{
-		public BinaryTree()
-		{ }
-		public BinaryTree(int value)
+		private Node? root = null;
+		class Node
 		{
-			Value = value;
-		}
-		public int? Value { get; set; }
-		public BinaryTree? LeftNode { get; set; }
-		public BinaryTree? RightNode { get; set; }
+			public int Value { get; set; }
+			public Node? LeftNode { get; set; }
+			public Node? RightNode { get; set; }
 
-		public void Insert(int value)
-		{
-			if (Value == null)
+			public Node(int value)
 			{
 				Value = value;
+				LeftNode = null;
+				RightNode = null;
 			}
-			else if (value < Value)
+		}
+
+		public void Insert(int value)
+        {
+			Insert(value, root);
+        }
+		private void Insert(int value, Node? node)
+		{
+			if (root == null)
 			{
-				if (LeftNode == null)
-					LeftNode = new BinaryTree(value);
-				else LeftNode.Insert(value);
+				root = new Node(value);
 			}
-			else if (value > Value)
+			if (node == null)
 			{
-				if (RightNode == null)
-					RightNode = new BinaryTree(value);
-				else RightNode.Insert(value);
+				node = new Node(value);
+			}
+			else if (value < node.Value)
+			{
+				if (node.LeftNode == null)
+					node.LeftNode = new Node(value);
+				else Insert(value, node.LeftNode);
+			}
+			else if (value > node.Value)
+			{
+				if (node.RightNode == null)
+					node.RightNode = new Node(value);
+				else Insert(value, node.RightNode);
 			}
 			else
 			{ }
 		}
 
 		public bool Find(int value)
+        {
+			return Find(value, root);
+        }
+		private bool Find(int value, Node? node)
 		{
-			if (Value == null)
+			if (node == null)
 			{
 				return false;
 			}
-			if (Value == value)
+			if (node.Value == value)
 			{
 				return true;
 			}
-			else if (value < Value)
+			else if (value < node.Value)
 			{
-				if (LeftNode == null)
+				if (node.LeftNode == null)
 					return false;
-				else return LeftNode.Find(value);
+				else return Find(value, node.LeftNode);
 			}
 			else
 			{
-				if (RightNode == null)
+				if (node.RightNode == null)
 					return false;
-				else return RightNode.Find(value);
+				else return Find(value, node.RightNode);
 			}
 		}
 
-		public bool Remove(int value)
+		public void Remove(int value)
 		{
-			return Remove(value, this);
+			root = Remove(value, root);
 		}
 
-		public bool Remove(int value, BinaryTree parentNode)
+		private Node? Remove(int value, Node? node)
 		{
-			if (Value == null)
+			if (node == null)
 			{
-				return false;
+				return null;
 			}
-			else if (value < Value)
+			else if (value < node.Value)
 			{
-				if (LeftNode == null)
-					return false;
-				else return LeftNode.Remove(value, this);
+				node.LeftNode = Remove(value, node.LeftNode);
 			}
-			else if (value > Value)
+			else if (value > node.Value)
 			{
-				if (RightNode == null)
-					return false;
-				else return RightNode.Remove(value, this);
+				node.RightNode = Remove(value, node.RightNode);
 			}
-			else if (value == Value)
+			else if (value == node.Value)
 			{
-				if (LeftNode == null && RightNode == null)
+				if (node.LeftNode == null && node.RightNode == null)
 				{
-					if (parentNode.LeftNode == this)
-					{
-						parentNode.LeftNode = null;
-					}
-					if (parentNode.RightNode == this)
-					{
-						parentNode.RightNode = null;
-					}
-					Value = null;
-					return true;
+					return null;
 				}
-				else if (LeftNode != null && RightNode == null)
+				else if (node.LeftNode != null && node.RightNode == null)
 				{
-					Value = LeftNode.Value;
-					RightNode = LeftNode.RightNode;
-					LeftNode = LeftNode.LeftNode;
-					return true;
+					node.Value = node.LeftNode.Value;
+					node.RightNode = node.LeftNode.RightNode;
+					node.LeftNode = node.LeftNode.LeftNode;
+					return node;
 				}
-				else if (LeftNode == null && RightNode != null)
+				else if (node.LeftNode == null && node.RightNode != null)
 				{
-					Value = RightNode.Value;
-					LeftNode = RightNode.LeftNode;
-					RightNode = RightNode.RightNode;					
-					return true;
+					node.Value = node.RightNode.Value;
+					node.LeftNode = node.RightNode.LeftNode;
+					node.RightNode = node.RightNode.RightNode;					
+					return node;
 				}
-				else if (LeftNode != null && RightNode != null)
+				else if (node.LeftNode != null && node.RightNode != null)
 				{
-					if (RightNode.LeftNode == null)
+					if (node.RightNode.LeftNode == null)
 					{
-						Value = RightNode.Value;
-						RightNode = RightNode.RightNode;
-						return true;
+						node.Value = node.RightNode.Value;
+						node.RightNode = node.RightNode.RightNode;
+						return node;
 					}
 					else
 					{
-						Value = RightNode.MinimumDelete(this);
-						return true;
+						node.Value = MinimumDelete(node.RightNode, node);
+						return node;
 					}
 				}
 			}
-			return false;
+			return node;
 		}
 
-		public int? MinimumDelete(BinaryTree parentNode)
+		private int MinimumDelete(Node node, Node parentNode)
 		{
-			if (LeftNode != null)
+			if (node.LeftNode != null)
 			{
-				return LeftNode.MinimumDelete(this);
+				return MinimumDelete(node.LeftNode, node);
 			}
 			else
 			{
-				parentNode.LeftNode = RightNode;
-				return Value;
+				parentNode.LeftNode = node.RightNode;
+				return node.Value;
 			}
 		}
 
 		public int? Minimum()
 		{
-			if (LeftNode != null)
+			return Minimum(root);
+		}
+
+		private int? Minimum(Node? node)
+		{
+			if (node == null)
+				return null;
+			if (node.LeftNode != null)
 			{
-				return LeftNode.Minimum();
+				return Minimum(node.LeftNode);
 			}
 			else
 			{
-				return Value;
+				return node.Value;
 			}
 		}
 		public int? Maximum()
 		{
-			if (RightNode != null)
+			return Maximum(root);
+		}
+
+		private int? Maximum(Node? node)
+		{
+			if (node == null)
+				return null;
+			if (node.RightNode != null)
 			{
-				return RightNode.Maximum();
+				return Maximum(node.RightNode);
 			}
 			else
 			{
-				return Value;
+				return node.Value;
 			}
 		}
 
+
 		public List<int> InfixTraverse()
 		{
+			return InfixTraverse(root);
+		}
+
+		private List<int> InfixTraverse(Node? node)
+		{
 			List<int> result = new List<int>();
-			if (Value == null)
+
+			if (node == null)
 			{
 				return result;
 			}
 
-			if (LeftNode != null)
+			if (node.LeftNode != null)
 			{
-				result.AddRange(LeftNode.InfixTraverse());
+				result.AddRange(InfixTraverse(node.LeftNode));
 			}
 
-			result.Add((int)Value);
+			result.Add(node.Value);
 
-			if (RightNode != null)
+			if (node.RightNode != null)
 			{
-				result.AddRange(RightNode.InfixTraverse());
+				result.AddRange(InfixTraverse(node.RightNode));
 			}
 			return result;
 		}
 
 		public List<int> PrefixTraverse()
 		{
+			return PrefixTraverse(root);
+		}
+
+		private List<int> PrefixTraverse(Node? node)
+		{
 			List<int> result = new List<int>();
-			if (Value == null)
+
+			if (node == null)
 			{
 				return result;
 			}
 
-			result.Add((int)Value);
+			result.Add(node.Value);
 
-			if (LeftNode != null)
+			if (node.LeftNode != null)
 			{
-				result.AddRange(LeftNode.PrefixTraverse());
+				result.AddRange(InfixTraverse(node.LeftNode));
 			}
 
-			if (RightNode != null)
+			if (node.RightNode != null)
 			{
-				result.AddRange(RightNode.PrefixTraverse());
+				result.AddRange(InfixTraverse(node.RightNode));
 			}
 			return result;
 		}
 
 		public List<int> PostfixTraverse()
 		{
+			return PostfixTraverse(root);
+		}
+
+		private List<int> PostfixTraverse(Node? node)
+		{
 			List<int> result = new List<int>();
-			if (Value == null)
+			if (node == null)
 			{
 				return result;
 			}
 
-			if (LeftNode != null)
+			if (node.LeftNode != null)
 			{
-				result.AddRange(LeftNode.PostfixTraverse());
+				result.AddRange(InfixTraverse(node.LeftNode));
 			}
 
-			if (RightNode != null)
+			if (node.RightNode != null)
 			{
-				result.AddRange(RightNode.PostfixTraverse());
+				result.AddRange(InfixTraverse(node.RightNode));
 			}
 
-			result.Add((int)Value);
+			result.Add(node.Value);
 
 			return result;
 		}
 
 		public void Traverse()
 		{
-			if (Value == null)
+			Traverse(root);
+		}
+
+		private void Traverse(Node? node)
+		{
+			if (node == null)
 			{
 				return;
 			}
 
-			Console.Write(Value);
+			Console.Write(node.Value);
 			Console.Write(" ");
-			if (LeftNode != null)
+			if (node.LeftNode != null)
 			{
 				Console.Write("left: ");
-				Console.Write(LeftNode.Value);
+				Console.Write(node.LeftNode.Value);
 				Console.Write(" ");
 			}
-			if (RightNode != null)
+			if (node.RightNode != null)
 			{
 				Console.Write("right: ");
-				Console.Write(RightNode.Value);
+				Console.Write(node.RightNode.Value);
 				Console.Write(" ");
 			}
 			Console.WriteLine(" ");
 
-			if (LeftNode != null)
+			if (node.LeftNode != null)
 			{
-				LeftNode.Traverse();
+				Traverse(node.LeftNode);
 			}
 
-			if (RightNode != null)
+			if (node.RightNode != null)
 			{
-				RightNode.Traverse();
+				Traverse(node.RightNode);
 			}
 		}
 	}
