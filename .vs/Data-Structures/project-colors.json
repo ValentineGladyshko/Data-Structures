@@ -25,7 +25,12 @@
       "ProjectGuid": "a68935f3-8f66-41ae-9e98-8a6318b839fa",
       "DisplayName": "Red-Black Tree",
       "ColorIndex": 3
+    },
+    "e3e87bf2-6ba7-4718-91fe-49c71eea27da": {
+      "ProjectGuid": "e3e87bf2-6ba7-4718-91fe-49c71eea27da",
+      "DisplayName": "Left-Leaning Red-Black Tree",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 5
 }

@@ -26,8 +26,18 @@ Console.WriteLine();
 leftLeaningRedBlackTree.Insert(8);
 leftLeaningRedBlackTree.Traverse();
 Console.WriteLine();
+leftLeaningRedBlackTree.Insert(7);
+leftLeaningRedBlackTree.Traverse();
+Console.WriteLine();
+leftLeaningRedBlackTree.Insert(4);
+leftLeaningRedBlackTree.Traverse();
+Console.WriteLine();
+leftLeaningRedBlackTree.Insert(13);
+leftLeaningRedBlackTree.Traverse();
+Console.WriteLine();
 
 
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
-//leftLeaningRedBlackTree.Traverse();
-//Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
+leftLeaningRedBlackTree.Remove(5);
+leftLeaningRedBlackTree.Traverse();
+Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));

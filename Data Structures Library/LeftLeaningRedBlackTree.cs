@@ -12,38 +12,60 @@ namespace DataStructures
 		Black
 	}
 	public class LeftLeaningRedBlackTree
-    {
+	{
 		private Node? root = null;
 		class Node
-        {
+		{
 			public int Value { get; set; }
 			public Color Color { get; set; }
 			public Node? LeftNode { get; set; }
 			public Node? RightNode { get; set; }
 
 			public Node(int value)
-            {
+			{
 				Value = value;
 				LeftNode = null;
 				RightNode = null;
 				Color = Color.Red;
-            }
+			}
 		}
-		
+
 		public void Insert(int value)
 		{
 			root = Insert(value, root);
 			root.Color = Color.Black;
 		}
 
+		public void Remove(int value)
+		{
+			if (root == null)
+			{
+				return;
+			}
+			if (Find(value) == false)
+			{
+				return;
+			}
+			if (GetColor(root.LeftNode) == Color.Black && GetColor(root.RightNode) == Color.Black)
+			{
+				root.Color = Color.Red;
+			}
+			root = Remove(value, root);
+			if (root != null)
+			{
+				root.Color = Color.Black;
+			}
+
+		}
+
 		private Color GetColor(Node? node)
-        {
-			if(node == null)
-            {
+		{
+			if (node == null)
+			{
 				return Color.Black;
-            }
-            else return node.Color; 
-        }
+			}
+			else return node.Color;
+		}
 
 		private Node Insert(int value, Node? node)
 		{
@@ -73,8 +95,8 @@ namespace DataStructures
 					node = RotateRight(node);
 				}
 			}
-			if(GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Red && node.RightNode != null && node.LeftNode != null)
-            {
+			if (GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Red && node.RightNode != null && node.LeftNode != null)
+			{
 				node.Color = Color.Red;
 
 				node.RightNode.Color = Color.Black;
@@ -128,7 +150,7 @@ namespace DataStructures
 			}
 			return node;
 
-			
+
 		}
 
 		private Node RotateRight(Node node)
@@ -136,7 +158,7 @@ namespace DataStructures
 			if (node.LeftNode != null)
 			{
 				Node child = node.LeftNode;
-				
+
 				node.LeftNode = child.RightNode;
 				child.RightNode = node;
 
@@ -295,14 +317,14 @@ namespace DataStructures
 				}
 				else
 				{
-					if(node.RightNode == null)
-					{ 
-						return null; 
+					if (node.RightNode == null)
+					{
+						return null;
 					}
 					node.RightNode = Remove(value, node.RightNode);
 				}
 			}
-			return FixUp(node);
+			return Balance(node);
 		}
 
 		public int? Minimum()
@@ -312,7 +334,7 @@ namespace DataStructures
 
 		private int? Minimum(Node? node)
 		{
-			if(node == null)
+			if (node == null)
 				return null;
 			if (node.LeftNode != null)
 			{
@@ -332,6 +354,7 @@ namespace DataStructures
 				root.Color = Color.Black;
 			}
 		}
+
 		private Node? MinimumDelete(Node? node)
 		{
 			if (node == null)
@@ -339,7 +362,7 @@ namespace DataStructures
 				return null;
 			}
 			if (node.LeftNode == null)
-			{ 
+			{
 				return null;
 			}
 			if (GetColor(node.LeftNode) == Color.Black && GetColor(node.LeftNode.LeftNode) == Color.Black)
@@ -427,7 +450,7 @@ namespace DataStructures
 		}
 
 		public List<int> PostfixTraverse()
-		{			
+		{
 			return PostfixTraverse(root);
 		}
 
