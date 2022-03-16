@@ -6,402 +6,324 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class AVLTree
+    public class AVLTree : BinaryTree, IBinaryTree
     {
-        public AVLTree()
+        private Node? root = null;
+        class Node : INode
         {
-            Height = 0;
-        }
-        public AVLTree(int value)
-        {
-            Value = value;
-            Height = 1;
-        }
+            public int Value { get; set; }
+            public int Height { get; set; }
+            public Node? LeftNode { get; set; }
+            public Node? RightNode { get; set; }
+            INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
+            INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
 
-        public AVLTree(AVLTree AVLTree)
-        {
-            Value = AVLTree.Value;
-            Height = AVLTree.Height;
-            LeftNode = AVLTree.LeftNode;
-            RightNode = AVLTree.RightNode;
-        }
-        public int Height { get; set; }
-        public int? Value { get; set; }
-        public AVLTree? LeftNode { get; set; }
-        public AVLTree? RightNode { get; set; }
-
-
-        public int BalanceFactor()
-        {
-            if (RightNode != null && LeftNode != null)
+            public Node(int value)
             {
-                return RightNode.Height - LeftNode.Height;
+                Value = value;
+                Height = 1;
+                LeftNode = null;
+                RightNode = null;
             }
-            else if (RightNode != null && LeftNode == null)
+            public Node(Node node)
             {
-                return RightNode.Height;
+                Value = node.Value;
+                Height = node.Height;
+                LeftNode = node.LeftNode;
+                RightNode = node.RightNode;
             }
-            else if (RightNode == null && LeftNode != null)
+        }       
+
+        private int BalanceFactor(Node node)
+        {
+            if (node.RightNode != null && node.LeftNode != null)
             {
-                return -LeftNode.Height;
+                return node.RightNode.Height - node.LeftNode.Height;
+            }
+            else if (node.RightNode != null && node.LeftNode == null)
+            {
+                return node.RightNode.Height;
+            }
+            else if (node.RightNode == null && node.LeftNode != null)
+            {
+                return -node.LeftNode.Height;
             }
             else return 0;
         }
 
-        public void FixHeight()
+        private void FixHeight(Node node)
         {
-            if (LeftNode != null && RightNode != null)
+            if (node.LeftNode != null && node.RightNode != null)
             {
-                Height = (LeftNode.Height > RightNode.Height ? LeftNode.Height : RightNode.Height) + 1;
+                node.Height = (node.LeftNode.Height > node.RightNode.Height ? node.LeftNode.Height : node.RightNode.Height) + 1;
             }
-            else if (LeftNode == null && RightNode != null)
+            else if (node.LeftNode == null && node.RightNode != null)
             {
-                Height = RightNode.Height + 1;
+                node.Height = node.RightNode.Height + 1;
             }
-            else if (LeftNode != null && RightNode == null)
+            else if (node.LeftNode != null && node.RightNode == null)
             {
-                Height = LeftNode.Height + 1;
+                node.Height = node.LeftNode.Height + 1;
             }
             else
             {
-                Height = 1;
+                node.Height = 1;
             }
         }
 
-        public void RotateLeft()
+        private void RotateLeft(Node node)
         {
-            if (RightNode != null)
+            if (node.RightNode != null)
             {
-                AVLTree temp = new AVLTree(this);
+                Node temp = new Node(node);
 
                 if (temp.RightNode != null)
                 {
-                    Value = temp.RightNode.Value;
-                    RightNode = temp.RightNode.RightNode;
+                    node.Value = temp.RightNode.Value;
+                    node.RightNode = temp.RightNode.RightNode;
                     temp.RightNode = temp.RightNode.LeftNode;
-                    LeftNode = temp;
-                    LeftNode.FixHeight();
-                    FixHeight();
+                    node.LeftNode = temp;
+                    FixHeight(node.LeftNode);
+                    FixHeight(node);
                 }
             }
         }
 
-        public void RotateRight()
+        private void RotateRight(Node node)
         {
-            if (LeftNode != null)
+            if (node.LeftNode != null)
             {
-                AVLTree temp = new AVLTree(this);
+                Node temp = new Node(node);
 
                 if (temp.LeftNode != null)
                 {
-                    Value = temp.LeftNode.Value;
-                    LeftNode = temp.LeftNode.LeftNode;
+                    node.Value = temp.LeftNode.Value;
+                    node.LeftNode = temp.LeftNode.LeftNode;
                     temp.LeftNode = temp.LeftNode.RightNode;
-                    RightNode = temp;
-                    RightNode.FixHeight();
-                    FixHeight();
+                    node.RightNode = temp;
+                    FixHeight(node.RightNode);
+                    FixHeight(node);
                 }
             }
         }
 
-        public void Balance()
+        private void Balance(Node node)
         {
-            FixHeight();
-            if (BalanceFactor() == 2 && RightNode != null)
+            FixHeight(node);
+            if (BalanceFactor(node) == 2 && node.RightNode != null)
             {
-                if (RightNode.BalanceFactor() < 0)
-                    RightNode.RotateRight();
-                RotateLeft();
+                if (BalanceFactor(node.RightNode) < 0)
+                    RotateRight(node.RightNode);
+                RotateLeft(node);
             }
 
-            if (BalanceFactor() == -2 && LeftNode != null)
+            if (BalanceFactor(node) == -2 && node.LeftNode != null)
             {
-                if (LeftNode.BalanceFactor() > 0)
-                    LeftNode.RotateLeft();
-                RotateRight();
+                if (BalanceFactor(node.LeftNode) > 0)
+                    RotateLeft(node.LeftNode);
+                RotateRight(node);
             }
         }
 
-        public void Insert(int value)
+        public override void Insert(int value)
         {
-            if (Value == null)
-            {
-                Value = value;
-            }
-            else if (value < Value)
-            {
-                if (LeftNode == null)
-                {
-                    LeftNode = new AVLTree(value);
-                }
-                else
-                {
-                    LeftNode.Insert(value);
-                }
-            }
-            else if (value > Value)
-            {
-                if (RightNode == null)
-                {
-                    RightNode = new AVLTree(value);
-                }
-                else
-                {
-                    RightNode.Insert(value);
-                }
-            }
-            Balance();
+            Insert(value, root);
         }
 
-        public bool Remove(int value)
+        private void Insert(int value, Node? node)
         {
-            return Remove(value, this);
+            if (root == null)
+            {
+                root = new Node(value);
+            }
+            if (node == null)
+            {
+                node = new Node(value);
+            }
+            else if (value < node.Value)
+            {
+                if (node.LeftNode == null)
+                {
+                    node.LeftNode = new Node(value);
+                }
+                else
+                {
+                    Insert(value, node.LeftNode);
+                }
+            }
+            else if (value > node.Value)
+            {
+                if (node.RightNode == null)
+                {
+                    node.RightNode = new Node(value);
+                }
+                else
+                {
+                    Insert(value, node.RightNode);
+                }
+            }
+            Balance(node);
         }
 
-        public bool Remove(int value, AVLTree parentNode)
+        public override void Remove(int value)
         {
-            if (Value == null)
+            Remove(value, root);
+        }
+
+        private void Remove(int value, Node? node)
+        {
+            if (node == null)
             {
-                return false;
+                return;
             }
-            else if (value < Value)
+            else if (value < node.Value)
             {
-                if (LeftNode == null)
-                    return false;
+                if (node.LeftNode == null)
+                    return;
                 else
                 {
-                    bool result = LeftNode.Remove(value, this);
-                    Balance();
-                    return result;
+                    Remove(value, node.LeftNode);
+                    Balance(node);
+                    return;
                 }
             }
-            else if (value > Value)
+            else if (value > node.Value)
             {
-                if (RightNode == null)
-                    return false;
+                if (node.RightNode == null)
+                    return;
                 else
                 {
-                    bool result = RightNode.Remove(value, this);
-                    Balance();
-                    return result;
+                    Remove(value, node.RightNode);
+                    Balance(node);
+                    return;
                 }
             }
-            else if (value == Value)
+            else if (value == node.Value)
             {
-                if (LeftNode == null && RightNode == null)
+                if (node.LeftNode == null && node.RightNode == null)
                 {
-                    if (parentNode.LeftNode == this)
+                    node = null;
+                    return;
+                }
+                else if (node.LeftNode != null && node.RightNode == null)
+                {
+                    node.Value = node.LeftNode.Value;
+                    node.RightNode = node.LeftNode.RightNode;
+                    node.LeftNode = node.LeftNode.LeftNode;
+                    Balance(node);
+                    return;
+                }
+                else if (node.LeftNode == null && node.RightNode != null)
+                {
+                    node.Value = node.RightNode.Value;
+                    node.LeftNode = node.RightNode.LeftNode;
+                    node.RightNode = node.RightNode.RightNode;
+                    Balance(node);
+                    return;
+                }
+                else if (node.LeftNode != null && node.RightNode != null)
+                {
+                    if (node.RightNode.LeftNode == null)
                     {
-                        parentNode.LeftNode = null;
-                    }
-                    if (parentNode.RightNode == this)
-                    {
-                        parentNode.RightNode = null;
-                    }
-                    Value = null;
-                    return true;
-                }
-                else if (LeftNode != null && RightNode == null)
-                {
-                    Value = LeftNode.Value;
-                    RightNode = LeftNode.RightNode;
-                    LeftNode = LeftNode.LeftNode;
-                    Balance();
-                    return true;
-                }
-                else if (LeftNode == null && RightNode != null)
-                {
-                    Value = RightNode.Value;
-                    LeftNode = RightNode.LeftNode;
-                    RightNode = RightNode.RightNode;
-                    Balance();
-                    return true;
-                }
-                else if (LeftNode != null && RightNode != null)
-                {
-                    if (RightNode.LeftNode == null)
-                    {
-                        Value = RightNode.Value;
-                        RightNode = RightNode.RightNode;
-                        Balance();
-                        return true;
+                        node.Value = node.RightNode.Value;
+                        node.RightNode = node.RightNode.RightNode;
+                        Balance(node);
+                        return;
                     }
                     else
                     {
-                        Value = RightNode.MinimumDelete(this);
-                        RightNode.Balance();
-                        Balance();
-                        return true;
+                        node.Value = MinimumDelete(node.RightNode, node);
+                        Balance(node.RightNode);
+                        Balance(node);
+                        return;
                     }
                 }
             }
-            return false;
+            return;
         }
 
-        public int? MinimumDelete(AVLTree parentNode)
+        private int MinimumDelete(Node node, Node parentNode)
         {
-            if (LeftNode != null)
+            if (node.LeftNode != null)
             {
-                int? result = LeftNode.MinimumDelete(this);
-                Balance();
-                return result;
+                return MinimumDelete(node.LeftNode, node);
             }
             else
             {
-                parentNode.LeftNode = RightNode;
-                return Value;
+                parentNode.LeftNode = node.RightNode;
+                return node.Value;
             }
         }
 
-        public bool Find(int value)
+        public override bool Find(int value)
         {
-            if (Value == null)
-            {
-                return false;
-            }
-            if (Value == value)
-            {
-                return true;
-            }
-            else if (value < Value)
-            {
-                if (LeftNode == null)
-                    return false;
-                else return LeftNode.Find(value);
-            }
-            else
-            {
-                if (RightNode == null)
-                    return false;
-                else return RightNode.Find(value);
-            }
+            return Find(value, root);
         }
 
-        public int? Minimum()
+        public override int? Minimum()
         {
-            if (LeftNode != null)
-            {
-                return LeftNode.Minimum();
-            }
-            else
-            {
-                return Value;
-            }
+            return Minimum(root);
         }
 
-        public int? Maximum()
+        public override int? Maximum()
         {
-            if (RightNode != null)
-            {
-                return RightNode.Maximum();
-            }
-            else
-            {
-                return Value;
-            }
+            return Maximum(root);
         }
 
-        public List<int> InfixTraverse()
+        public override List<int> InfixTraverse()
         {
-            List<int> result = new List<int>();
-            if (Value == null)
-            {
-                return result;
-            }
-
-            if (LeftNode != null)
-            {
-                result.AddRange(LeftNode.InfixTraverse());
-            }
-
-            result.Add((int)Value);
-
-            if (RightNode != null)
-            {
-                result.AddRange(RightNode.InfixTraverse());
-            }
-            return result;
+            return InfixTraverse(root);
         }
 
-        public List<int> PrefixTraverse()
+        public override List<int> PrefixTraverse()
         {
-            List<int> result = new List<int>();
-            if (Value == null)
-            {
-                return result;
-            }
-
-            result.Add((int)Value);
-
-            if (LeftNode != null)
-            {
-                result.AddRange(LeftNode.PrefixTraverse());
-            }
-
-            if (RightNode != null)
-            {
-                result.AddRange(RightNode.PrefixTraverse());
-            }
-            return result;
+            return PrefixTraverse(root);
         }
 
-        public List<int> PostfixTraverse()
+        public override List<int> PostfixTraverse()
         {
-            List<int> result = new List<int>();
-            if (Value == null)
-            {
-                return result;
-            }
-
-            if (LeftNode != null)
-            {
-                result.AddRange(LeftNode.PostfixTraverse());
-            }
-
-            if (RightNode != null)
-            {
-                result.AddRange(RightNode.PostfixTraverse());
-            }
-
-            result.Add((int)Value);
-
-            return result;
+            return PostfixTraverse(root);
         }
 
-        public void Traverse()
+        public override void Traverse()
         {
-            if (Value == null)
+            Traverse(root);
+        }
+
+        private void Traverse(Node? node)
+        {
+            if (node == null)
             {
                 return;
             }
 
-            Console.Write(Value);
+            Console.Write(node.Value);
             Console.Write(" ");
-            if (LeftNode != null)
+            if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(LeftNode.Value);
+                Console.Write(node.LeftNode.Value);
                 Console.Write(" ");
             }
-            if (RightNode != null)
+            if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(RightNode.Value);
+                Console.Write(node.RightNode.Value);
                 Console.Write(" ");
             }
             Console.Write("height: ");
-            Console.Write(Height);
+            Console.Write(node.Height);
             Console.Write(" ");
             Console.WriteLine(" ");
 
-            if (LeftNode != null)
+            if (node.LeftNode != null)
             {
-                LeftNode.Traverse();
+                Traverse(node.LeftNode);
             }
 
-            if (RightNode != null)
+            if (node.RightNode != null)
             {
-                RightNode.Traverse();
+                Traverse(node.RightNode);
             }
         }
     }
