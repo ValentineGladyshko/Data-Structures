@@ -36,8 +36,7 @@ leftLeaningRedBlackTree.Insert(13);
 leftLeaningRedBlackTree.Traverse();
 Console.WriteLine();
 
-
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
-leftLeaningRedBlackTree.Remove(5);
+Console.WriteLine(leftLeaningRedBlackTree.Find(5));
 leftLeaningRedBlackTree.Traverse();
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));

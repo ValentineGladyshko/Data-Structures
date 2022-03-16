@@ -30,7 +30,17 @@
       "ProjectGuid": "e3e87bf2-6ba7-4718-91fe-49c71eea27da",
       "DisplayName": "Left-Leaning Red-Black Tree",
       "ColorIndex": 4
+    },
+    "32456cb8-30a3-4d31-a4f3-51ec84d5ee0a": {
+      "ProjectGuid": "32456cb8-30a3-4d31-a4f3-51ec84d5ee0a",
+      "DisplayName": "Left-Leaning Red-Black Tree Old",
+      "ColorIndex": 5
+    },
+    "091a0d57-cb0b-4a88-b8b9-76e6e88b770d": {
+      "ProjectGuid": "091a0d57-cb0b-4a88-b8b9-76e6e88b770d",
+      "DisplayName": "Data Structures Library Old",
+      "ColorIndex": 6
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 7
 }
