@@ -318,7 +318,6 @@ namespace DataStructures
                 root.Color = Color.Black;
             }
         }
-
         private Node? MinimumDelete(Node? node)
         {
             if (node == null)
@@ -361,7 +360,6 @@ namespace DataStructures
         {
             Traverse(root);
         }
-
         private void Traverse(Node? node)
         {
             if (node == null)

@@ -37,38 +37,24 @@ namespace DataStructures
         private int BalanceFactor(Node node)
         {
             if (node.RightNode != null && node.LeftNode != null)
-            {
                 return node.RightNode.Height - node.LeftNode.Height;
-            }
             else if (node.RightNode != null && node.LeftNode == null)
-            {
                 return node.RightNode.Height;
-            }
             else if (node.RightNode == null && node.LeftNode != null)
-            {
                 return -node.LeftNode.Height;
-            }
             else return 0;
         }
 
         private void FixHeight(Node node)
         {
             if (node.LeftNode != null && node.RightNode != null)
-            {
                 node.Height = (node.LeftNode.Height > node.RightNode.Height ? node.LeftNode.Height : node.RightNode.Height) + 1;
-            }
             else if (node.LeftNode == null && node.RightNode != null)
-            {
                 node.Height = node.RightNode.Height + 1;
-            }
             else if (node.LeftNode != null && node.RightNode == null)
-            {
                 node.Height = node.LeftNode.Height + 1;
-            }
             else
-            {
                 node.Height = 1;
-            }
         }
 
         private void RotateLeft(Node node)
@@ -129,89 +115,68 @@ namespace DataStructures
         {
             Insert(value, root);
         }
-
         private void Insert(int value, Node? node)
         {
             if (root == null)
-            {
                 root = new Node(value);
-            }
             if (node == null)
-            {
                 node = new Node(value);
-            }
             else if (value < node.Value)
             {
-                if (node.LeftNode == null)
-                {
-                    node.LeftNode = new Node(value);
-                }
-                else
-                {
-                    Insert(value, node.LeftNode);
-                }
+                if (node.LeftNode == null)                
+                    node.LeftNode = new Node(value);               
+                else Insert(value, node.LeftNode);
             }
             else if (value > node.Value)
             {
                 if (node.RightNode == null)
-                {
                     node.RightNode = new Node(value);
-                }
-                else
-                {
-                    Insert(value, node.RightNode);
-                }
+                else Insert(value, node.RightNode);
             }
             Balance(node);
         }
 
         public override void Remove(int value)
         {
-            Remove(value, root);
+            root = Remove(value, root);
         }
-
-        private void Remove(int value, Node? node)
+        private Node? Remove(int value, Node? node)
         {
             if (node == null)
-            {
-                return;
-            }
+                return null;
             else if (value < node.Value)
             {
                 if (node.LeftNode == null)
-                    return;
+                    return node;
                 else
                 {
-                    Remove(value, node.LeftNode);
+                    node.LeftNode = Remove(value, node.LeftNode);
                     Balance(node);
-                    return;
+                    return node;
                 }
             }
             else if (value > node.Value)
             {
                 if (node.RightNode == null)
-                    return;
+                    return node;
                 else
                 {
-                    Remove(value, node.RightNode);
+                    node.RightNode = Remove(value, node.RightNode);
                     Balance(node);
-                    return;
+                    return node;
                 }
             }
             else if (value == node.Value)
             {
                 if (node.LeftNode == null && node.RightNode == null)
-                {
-                    node = null;
-                    return;
-                }
+                    return null;
                 else if (node.LeftNode != null && node.RightNode == null)
                 {
                     node.Value = node.LeftNode.Value;
                     node.RightNode = node.LeftNode.RightNode;
                     node.LeftNode = node.LeftNode.LeftNode;
                     Balance(node);
-                    return;
+                    return node;
                 }
                 else if (node.LeftNode == null && node.RightNode != null)
                 {
@@ -219,38 +184,47 @@ namespace DataStructures
                     node.LeftNode = node.RightNode.LeftNode;
                     node.RightNode = node.RightNode.RightNode;
                     Balance(node);
-                    return;
+                    return node;
                 }
                 else if (node.LeftNode != null && node.RightNode != null)
                 {
-                    if (node.RightNode.LeftNode == null)
+                    if (node.LeftNode.RightNode == null)
                     {
-                        node.Value = node.RightNode.Value;
-                        node.RightNode = node.RightNode.RightNode;
+                        node.Value = node.LeftNode.Value;
+                        node.LeftNode = node.LeftNode.LeftNode;
                         Balance(node);
-                        return;
+                        return node;
                     }
                     else
                     {
-                        node.Value = MinimumDelete(node.RightNode, node);
-                        Balance(node.RightNode);
+                        node.Value = MaximumDelete(node.LeftNode, node);
+                        Balance(node.LeftNode);
                         Balance(node);
-                        return;
+                        return node;
                     }
                 }
             }
-            return;
+            return node;
         }
 
         private int MinimumDelete(Node node, Node parentNode)
         {
             if (node.LeftNode != null)
-            {
                 return MinimumDelete(node.LeftNode, node);
-            }
             else
             {
                 parentNode.LeftNode = node.RightNode;
+                return node.Value;
+            }
+        }
+
+        private int MaximumDelete(Node node, Node parentNode)
+        {
+            if (node.RightNode != null)
+                return MaximumDelete(node.RightNode, node);
+            else
+            {
+                parentNode.RightNode = node.LeftNode;
                 return node.Value;
             }
         }
@@ -289,13 +263,10 @@ namespace DataStructures
         {
             Traverse(root);
         }
-
         private void Traverse(Node? node)
         {
             if (node == null)
-            {
                 return;
-            }
 
             Console.Write(node.Value);
             Console.Write(" ");
@@ -317,14 +288,10 @@ namespace DataStructures
             Console.WriteLine(" ");
 
             if (node.LeftNode != null)
-            {
                 Traverse(node.LeftNode);
-            }
 
             if (node.RightNode != null)
-            {
                 Traverse(node.RightNode);
-            }
         }
     }
 }

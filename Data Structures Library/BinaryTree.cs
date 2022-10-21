@@ -28,13 +28,9 @@ namespace DataStructures
         private void Insert(int value, Node? node)
         {
             if (root == null)
-            {
                 root = new Node(value);
-            }
             if (node == null)
-            {
                 node = new Node(value);
-            }
             else if (value < node.Value)
             {
                 if (node.LeftNode == null)
@@ -47,8 +43,6 @@ namespace DataStructures
                     node.RightNode = new Node(value);
                 else Insert(value, node.RightNode);
             }
-            else
-            { }
         }
 
         public virtual bool Find(int value)
@@ -58,52 +52,31 @@ namespace DataStructures
         protected bool Find(int value, INode? node)
         {
             if (node == null)
-            {
                 return false;
-            }
             if (node.Value == value)
-            {
                 return true;
-            }
             else if (value < node.Value)
-            {
-                if (node.LeftNode == null)
-                    return false;
-                else return Find(value, node.LeftNode);
-            }
+                return Find(value, node.LeftNode);
             else
-            {
-                if (node.RightNode == null)
-                    return false;
-                else return Find(value, node.RightNode);
-            }
+                return Find(value, node.RightNode);
         }
 
         public virtual void Remove(int value)
         {
             root = Remove(value, root);
         }
-
         private Node? Remove(int value, Node? node)
         {
             if (node == null)
-            {
                 return null;
-            }
             else if (value < node.Value)
-            {
                 node.LeftNode = Remove(value, node.LeftNode);
-            }
             else if (value > node.Value)
-            {
                 node.RightNode = Remove(value, node.RightNode);
-            }
             else if (value == node.Value)
             {
                 if (node.LeftNode == null && node.RightNode == null)
-                {
                     return null;
-                }
                 else if (node.LeftNode != null && node.RightNode == null)
                 {
                     node.Value = node.LeftNode.Value;
@@ -139,9 +112,7 @@ namespace DataStructures
         private int MinimumDelete(Node node, Node parentNode)
         {
             if (node.LeftNode != null)
-            {
                 return MinimumDelete(node.LeftNode, node);
-            }
             else
             {
                 parentNode.LeftNode = node.RightNode;
@@ -153,65 +124,46 @@ namespace DataStructures
         {
             return Minimum(root);
         }
-
         protected int? Minimum(INode? node)
         {
             if (node == null)
                 return null;
             if (node.LeftNode != null)
-            {
                 return Minimum(node.LeftNode);
-            }
             else
-            {
                 return node.Value;
-            }
         }
+
         public virtual int? Maximum()
         {
             return Maximum(root);
         }
-
         protected int? Maximum(INode? node)
         {
             if (node == null)
                 return null;
             if (node.RightNode != null)
-            {
                 return Maximum(node.RightNode);
-            }
             else
-            {
                 return node.Value;
-            }
         }
-
 
         public virtual List<int> InfixTraverse()
         {
             return InfixTraverse(root);
         }
-
         protected List<int> InfixTraverse(INode? node)
         {
             List<int> result = new List<int>();
 
             if (node == null)
-            {
                 return result;
-            }
 
             if (node.LeftNode != null)
-            {
                 result.AddRange(InfixTraverse(node.LeftNode));
-            }
-
             result.Add(node.Value);
-
             if (node.RightNode != null)
-            {
                 result.AddRange(InfixTraverse(node.RightNode));
-            }
             return result;
         }
 
@@ -219,27 +171,19 @@ namespace DataStructures
         {
             return PrefixTraverse(root);
         }
-
         protected List<int> PrefixTraverse(INode? node)
         {
             List<int> result = new List<int>();
 
             if (node == null)
-            {
                 return result;
-            }
 
             result.Add(node.Value);
-
             if (node.LeftNode != null)
-            {
                 result.AddRange(InfixTraverse(node.LeftNode));
-            }
-
             if (node.RightNode != null)
-            {
                 result.AddRange(InfixTraverse(node.RightNode));
-            }
+
             return result;
         }
 
@@ -247,25 +191,16 @@ namespace DataStructures
         {
             return PostfixTraverse(root);
         }
-
         protected List<int> PostfixTraverse(INode? node)
         {
             List<int> result = new List<int>();
             if (node == null)
-            {
                 return result;
-            }
 
             if (node.LeftNode != null)
-            {
                 result.AddRange(InfixTraverse(node.LeftNode));
-            }
-
             if (node.RightNode != null)
-            {
                 result.AddRange(InfixTraverse(node.RightNode));
-            }
-
             result.Add(node.Value);
 
             return result;
@@ -275,13 +210,10 @@ namespace DataStructures
         {
             Traverse(root);
         }
-
         private void Traverse(Node? node)
         {
             if (node == null)
-            {
                 return;
-            }
 
             Console.Write(node.Value);
             Console.Write(" ");
@@ -300,14 +232,10 @@ namespace DataStructures
             Console.WriteLine(" ");
 
             if (node.LeftNode != null)
-            {
                 Traverse(node.LeftNode);
-            }
 
             if (node.RightNode != null)
-            {
                 Traverse(node.RightNode);
-            }
         }
     }
 }
