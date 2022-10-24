@@ -31,85 +31,11 @@ namespace DataStructures
                 Color = Color.Red;
             }
         }
-
-        public override void Insert(int value)
-        {
-            root = Insert(value, root);
-            root.Color = Color.Black;
-        }
-
-        public override void Remove(int value)
-        {
-            if (root == null)
-            {
-                return;
-            }
-            if (Find(value) == false)
-            {
-                return;
-            }
-            if (GetColor(root.LeftNode) == Color.Black && GetColor(root.RightNode) == Color.Black)
-            {
-                root.Color = Color.Red;
-            }
-            root = Remove(value, root);
-            if (root != null)
-            {
-                root.Color = Color.Black;
-            }
-
-        }
-
         private Color GetColor(Node? node)
         {
             if (node == null)
-            {
                 return Color.Black;
-            }
             else return node.Color;
-        }
-
-        private Node Insert(int value, Node? node)
-        {
-            if (node == null)
-            {
-                return node = new Node(value);
-            }
-            else if (value < node.Value)
-            {
-                node.LeftNode = Insert(value, node.LeftNode);
-            }
-            else if (value > node.Value)
-            {
-                node.RightNode = Insert(value, node.RightNode);
-            }
-            else return node;
-
-            if (GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Black)
-            {
-                node = RotateLeft(node);
-            }
-
-            if (node.LeftNode != null)
-            {
-                if (GetColor(node.LeftNode.LeftNode) == Color.Red && GetColor(node.LeftNode) == Color.Red)
-                {
-                    node = RotateRight(node);
-                }
-            }
-            if (GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Red && node.RightNode != null && node.LeftNode != null)
-            {
-                node.Color = Color.Red;
-
-                node.RightNode.Color = Color.Black;
-                node.LeftNode.Color = Color.Black;
-            }
-            return node;
-        }
-
-        public override bool Find(int value)
-        {
-            return Find(value, root);
         }
 
         private Node RotateLeft(Node node)
@@ -151,34 +77,22 @@ namespace DataStructures
         private void SwapColors(Node node)
         {
             if (node.Color == Color.Red)
-            {
                 node.Color = Color.Black;
-            }
             else
-            {
                 node.Color = Color.Red;
-            }
             if (node.RightNode != null)
             {
                 if (node.RightNode.Color == Color.Red)
-                {
                     node.RightNode.Color = Color.Black;
-                }
                 else
-                {
                     node.RightNode.Color = Color.Red;
-                }
             }
             if (node.LeftNode != null)
             {
                 if (node.LeftNode.Color == Color.Red)
-                {
                     node.LeftNode.Color = Color.Black;
-                }
                 else
-                {
                     node.LeftNode.Color = Color.Red;
-                }
             }
         }
 
@@ -214,43 +128,76 @@ namespace DataStructures
         private Node Balance(Node node)
         {
             if (GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Black)
-            {
                 node = RotateLeft(node);
-            }
             if (node.LeftNode != null)
             {
                 if (GetColor(node.LeftNode) == Color.Red && GetColor(node.LeftNode.LeftNode) == Color.Red)
-                {
                     node = RotateRight(node);
-                }
             }
             if (GetColor(node.LeftNode) == Color.Red && GetColor(node.RightNode) == Color.Red)
-            {
                 SwapColors(node);
-            }
             return node;
         }
 
         private Node FixUp(Node node)
         {
             if (GetColor(node.RightNode) == Color.Red)
-            {
                 node = RotateLeft(node);
-            }
             if (node.LeftNode != null)
             {
                 if (GetColor(node.LeftNode) == Color.Red && GetColor(node.LeftNode.LeftNode) == Color.Red)
-                {
                     node = RotateRight(node);
-                }
             }
             if (GetColor(node.LeftNode) == Color.Red && GetColor(node.RightNode) == Color.Red)
-            {
                 SwapColors(node);
+            return node;
+        }
+
+        public override void Insert(int value)
+        {
+            root = Insert(value, root);
+            root.Color = Color.Black;
+        }
+        private Node Insert(int value, Node? node)
+        {
+            if (node == null)
+                return node = new Node(value);
+            else if (value < node.Value)
+                node.LeftNode = Insert(value, node.LeftNode);
+            else if (value > node.Value)
+                node.RightNode = Insert(value, node.RightNode);
+            else return node;
+
+            if (GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Black)
+                node = RotateLeft(node);
+
+            if (node.LeftNode != null)
+            {
+                if (GetColor(node.LeftNode.LeftNode) == Color.Red && GetColor(node.LeftNode) == Color.Red)
+                    node = RotateRight(node);
+            }
+            if (GetColor(node.RightNode) == Color.Red && GetColor(node.LeftNode) == Color.Red && node.RightNode != null && node.LeftNode != null)
+            {
+                node.Color = Color.Red;
+
+                node.RightNode.Color = Color.Black;
+                node.LeftNode.Color = Color.Black;
             }
             return node;
         }
 
+        public override void Remove(int value)
+        {
+            if (root == null)
+                return;
+            if (Find(value) == false)
+                return;
+            if (GetColor(root.LeftNode) == Color.Black && GetColor(root.RightNode) == Color.Black)
+                root.Color = Color.Red;
+            root = Remove(value, root);
+            if (root != null)
+                root.Color = Color.Black;
+        }
         private Node? Remove(int value, Node node)
         {
             if (value < node.Value)
@@ -258,31 +205,21 @@ namespace DataStructures
                 if (node.LeftNode != null)
                 {
                     if (GetColor(node.LeftNode) == Color.Black && GetColor(node.LeftNode.LeftNode) == Color.Black)
-                    {
                         node = MoveRedLeft(node);
-                    }
                 }
                 if (node.LeftNode != null)
-                {
                     node.LeftNode = Remove(value, node.LeftNode);
-                }
             }
             else
             {
                 if (GetColor(node.LeftNode) == Color.Red)
-                {
                     node = RotateRight(node);
-                }
                 if (value == node.Value && (node.RightNode == null))
-                {
                     return null;
-                }
                 if (node.RightNode != null)
                 {
                     if (GetColor(node.RightNode) == Color.Black && GetColor(node.RightNode.LeftNode) == Color.Black)
-                    {
                         node = MoveRedRight(node);
-                    }
                 }
                 if (value == node.Value)
                 {
@@ -296,18 +233,11 @@ namespace DataStructures
                 else
                 {
                     if (node.RightNode == null)
-                    {
                         return null;
-                    }
                     node.RightNode = Remove(value, node.RightNode);
                 }
             }
             return Balance(node);
-        }
-
-        public override int? Minimum()
-        {
-            return Minimum(root);
         }
 
         public void MinimumDelete()
@@ -335,6 +265,16 @@ namespace DataStructures
             node.LeftNode = MinimumDelete(node.LeftNode);
             return FixUp(node);
         }
+
+        public override bool Find(int value)
+        {
+            return Find(value, root);
+        }
+
+        public override int? Minimum()
+        {
+            return Minimum(root);
+        }        
 
         public override int? Maximum()
         {
