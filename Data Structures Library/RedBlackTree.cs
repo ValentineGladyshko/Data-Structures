@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataStructures
 {
@@ -108,28 +110,6 @@ namespace DataStructures
                     }
                 }
             }
-            //if (node.RightNode != null)
-            //{
-            //    Node pivot = node.RightNode;
-
-            //    pivot.ParentNode = node.ParentNode;
-
-            //    if (node.ParentNode != null)
-            //    {
-            //        if (node.ParentNode.LeftNode == node)
-            //            node.ParentNode.LeftNode = pivot;
-            //        else
-            //            node.ParentNode.RightNode = pivot;
-            //    }
-
-            //    node.RightNode = pivot.LeftNode;
-
-            //    if (pivot.LeftNode != null)
-            //        pivot.LeftNode.ParentNode = node;
-
-            //    node.ParentNode = pivot;
-            //    pivot.LeftNode = node;
-            //}
         }
 
         private void RotateRight(Node node)
@@ -164,29 +144,6 @@ namespace DataStructures
                     }
                 }
             }
-            //if (node.LeftNode != null)
-            //{
-            //    Node pivot = node.LeftNode;
-
-            //    pivot.ParentNode = node.ParentNode;
-
-            //    if (node.ParentNode != null)
-            //    {
-            //        if (node.ParentNode.LeftNode == node)
-            //            node.ParentNode.LeftNode = pivot;
-            //        else
-            //            node.ParentNode.RightNode = pivot;
-            //    }
-
-            //    node.LeftNode = pivot.RightNode;
-
-            //    if (pivot.RightNode != null)
-            //        pivot.RightNode.ParentNode = node;
-
-            //    node.ParentNode = pivot;
-            //    pivot.RightNode = node;
-            //}
-
         }
 
         public override void Insert(int value)
@@ -283,7 +240,8 @@ namespace DataStructures
                         }
                         else
                         {
-                            node.ParentNode.LeftNode.Color = Color.Black;
+                            if (node.ParentNode.LeftNode != null)
+                                node.ParentNode.LeftNode.Color = Color.Black;
                             node.Color = Color.Black;
                             if (node.ParentNode != root)
                                 node.ParentNode.Color = Color.Red;
@@ -300,7 +258,8 @@ namespace DataStructures
                         }
                         else
                         {
-                            node.ParentNode.RightNode.Color = Color.Black;
+                            if (node.ParentNode.RightNode != null)
+                                node.ParentNode.RightNode.Color = Color.Black;
                             node.Color = Color.Black;
                             if (node.ParentNode != root)
                                 node.ParentNode.Color = Color.Red;
@@ -310,14 +269,50 @@ namespace DataStructures
                 redConflict = false;
             }
             return node;
-
-            if ((GetColor(node) == Color.Red && GetColor(node.LeftNode) == Color.Red)
-                || (GetColor(node) == Color.Red && GetColor(node.RightNode) == Color.Red))
-            {
-
-            }
         }
 
+        public bool isValidRedBlackTree()
+        {
+            ArrayList blackDepthList = new();
+            isValidRedBlackTree(root, blackDepthList);
+
+            var depth = blackDepthList[0];
+            if (depth == null)
+                return true;
+
+            foreach (int blackDepth in blackDepthList)
+            {
+                if (blackDepth != (int)depth)
+                    return false;
+            }
+
+            return true;
+        }
+        private void isValidRedBlackTree(Node? node, ArrayList blackDepthList)
+        {
+            if (node != null)
+            {
+                if (node.LeftNode == null || node.RightNode == null)
+                {
+                    int blackDepth = 1;
+                    Node temp = node;
+                    while (temp.ParentNode != null)
+                    {
+                        if (GetColor(temp) == Color.Black)
+                            blackDepth++;
+                        temp = temp.ParentNode;
+                    }
+                    blackDepthList.Add(blackDepth);
+
+                }
+                if (node.LeftNode != null)
+                    isValidRedBlackTree(node.LeftNode, blackDepthList);
+
+                if (node.RightNode != null)
+                    isValidRedBlackTree(node.RightNode, blackDepthList);
+            }
+
+        }
         public override void Remove(int value)
         {
         }

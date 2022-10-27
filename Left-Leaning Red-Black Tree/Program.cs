@@ -75,6 +75,6 @@ Console.WriteLine();
 leftLeaningRedBlackTree.Insert(23);
 
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
-Console.WriteLine(leftLeaningRedBlackTree.Find(5));
+Console.WriteLine(leftLeaningRedBlackTree.isValidRedBlackTree());
 leftLeaningRedBlackTree.Traverse();
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
