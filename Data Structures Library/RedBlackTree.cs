@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,14 @@ namespace DataStructures
                 ParentNode = parentNode;
                 Color = Color.Red;
             }
+            public Node(int value, Node parentNode, Color color)
+            {
+                Value = value;
+                LeftNode = null;
+                RightNode = null;
+                ParentNode = parentNode;
+                Color = color;
+            }
             public Node(Node node)
             {
                 Value = node.Value;
@@ -60,22 +69,23 @@ namespace DataStructures
             else return node.Color;
         }
 
-        private Node? GetGrandparent(Node? node)
+        private Node? GetSibling(Node node)
         {
-            if (node != null)
-                if (node.ParentNode != null)
-                    return node.ParentNode.ParentNode;
-            return null;
-        }
-
-        private Node? GetUncle(Node? node)
-        {
-            Node? Grandparent = GetGrandparent(node);
-            if (Grandparent != null && node != null)
-                if (node.ParentNode == Grandparent.LeftNode)
-                    return Grandparent.RightNode;
-                else return Grandparent.LeftNode;
-            return null;
+            if (node.ParentNode == null)
+                return null;
+            else
+            {
+                if (node.ParentNode.LeftNode == node)
+                    return node.ParentNode.RightNode;
+                else if (node.ParentNode.RightNode == node)
+                    return node.ParentNode.LeftNode;
+                else if (node.ParentNode.LeftNode == null && node.ParentNode.RightNode != null)
+                    return node.ParentNode.RightNode;
+                else if (node.ParentNode.RightNode == null && node.ParentNode.LeftNode != null)
+                    return node.ParentNode.LeftNode;
+                else
+                    return new Node(0);
+            }
         }
 
         private void RotateLeft(Node node)
@@ -158,8 +168,6 @@ namespace DataStructures
         }
         private Node Insert(int value, Node? node)
         {
-
-            //return null;
             bool redConflict = false;
             if (node == null)
                 return new Node(value);
@@ -266,7 +274,6 @@ namespace DataStructures
                         }
                     }
                 }
-                redConflict = false;
             }
             return node;
         }
@@ -313,8 +320,192 @@ namespace DataStructures
             }
 
         }
+
         public override void Remove(int value)
         {
+            Remove(value, root);
+            if (root != null)
+                root.Color = Color.Black;
+        }
+        private void Remove(int value, Node? node)
+        {
+            if (node == null)
+                return;
+            else if (value < node.Value)
+                Remove(value, node.LeftNode);
+            else if (value > node.Value)
+                Remove(value, node.RightNode);
+            else if (value == node.Value)
+            {
+                if (node.LeftNode == null && node.RightNode == null)
+                {
+                    if (node.ParentNode != null)
+                    {
+                        if (node.ParentNode.LeftNode == node)
+                            node.ParentNode.LeftNode = null;
+                        else if (node.ParentNode.RightNode == node)
+                            node.ParentNode.RightNode = null;
+
+                        FixUp(node);
+                    }
+                }
+                else if (node.LeftNode != null && node.RightNode == null)
+                {
+                    node.Value = node.LeftNode.Value;
+                    var color = node.LeftNode.Color;
+                    node.RightNode = node.LeftNode.RightNode;
+                    node.LeftNode = node.LeftNode.LeftNode;
+                    if (node.LeftNode != null)
+                        FixUp(node.LeftNode);
+                    else
+                        FixUp(new Node(0, node, color));
+                }
+                else if (node.LeftNode == null && node.RightNode != null)
+                {
+                    node.Value = node.RightNode.Value;
+                    var color = node.RightNode.Color;
+                    node.LeftNode = node.RightNode.LeftNode;
+                    node.RightNode = node.RightNode.RightNode;
+                    if (node.RightNode != null)
+                        FixUp(node.RightNode);
+                    else
+                        FixUp(new Node(0, node, color));
+                }
+                else if (node.LeftNode != null && node.RightNode != null)
+                {
+                    if (node.RightNode.LeftNode == null)
+                    {
+                        node.Value = node.RightNode.Value;
+                        var color = node.RightNode.Color;
+                        node.RightNode = node.RightNode.RightNode;
+                        if (node.RightNode != null)
+                            FixUp(node.RightNode);
+                        else
+                            FixUp(new Node(0, node, color));
+                    }
+                    else
+                    {
+                        var temp = MaximumDelete(node.LeftNode, node);
+                        node.Value = temp.Value;
+                        FixUp(temp);
+                }
+            }
+            }
+        }
+
+        private Node MaximumDelete(Node node, Node parentNode)
+        {
+            if (node.RightNode != null)
+                return MaximumDelete(node.RightNode, node);
+            else
+            {
+                parentNode.RightNode = node.LeftNode;
+                return node;
+            }
+        }
+
+        private void FixUp(Node node)
+        {
+            if (GetColor(node) == Color.Red && node.RightNode == null && node.LeftNode == null)
+                return;
+
+            if (node == root)
+            {
+                return;
+            }
+
+            var sibling = GetSibling(node);
+            if (GetColor(node) == Color.Black && sibling != null && GetColor(sibling) == Color.Black && GetColor(sibling.LeftNode) == Color.Black && GetColor(sibling.RightNode) == Color.Black)
+            {
+                sibling.Color = Color.Red;
+                if (node.ParentNode != null)
+                {
+                    if (GetColor(node.ParentNode) == Color.Black)
+                        FixUp(node.ParentNode);
+                    else
+                        node.ParentNode.Color = Color.Black;
+                }
+                return;
+            }
+
+            if (GetColor(node) == Color.Black && sibling != null && GetColor(sibling) == Color.Red)
+            {
+                if (node.ParentNode != null)
+                {
+                    sibling.Color = node.ParentNode.Color;
+                    node.ParentNode.Color = Color.Black;
+                    if (sibling == node.ParentNode.LeftNode)
+                    {
+                        RotateRight(node.ParentNode);
+                        FixUp(node.ParentNode);
+                    }
+                    else
+                    {
+                        RotateLeft(node.ParentNode);
+                        FixUp(node.ParentNode);
+                    }
+                }
+                return;
+            }
+            if (GetColor(node) == Color.Black && sibling != null && GetColor(sibling) == Color.Black && GetColor(sibling.LeftNode) == Color.Black && GetColor(sibling.RightNode) == Color.Black)
+            {
+                return;
+            }
+            if (GetColor(node) == Color.Black && sibling != null && GetColor(sibling) == Color.Black)
+            {
+                if (node.ParentNode != null)
+                {
+                    if (sibling == node.ParentNode.LeftNode)
+                    {
+                        if (GetColor(sibling.LeftNode) == Color.Black && sibling.RightNode != null && GetColor(sibling.RightNode) == Color.Red)
+                        {
+                            sibling.RightNode.Color = sibling.Color;
+                            sibling.Color = Color.Red;
+                            RotateLeft(sibling);
+                        }
+                    }
+                    else
+                    {
+                        if (GetColor(sibling.RightNode) == Color.Black && sibling.LeftNode != null && GetColor(sibling.LeftNode) == Color.Red)
+                        {
+                            sibling.LeftNode.Color = sibling.Color;
+                            sibling.Color = Color.Red;
+                            RotateRight(sibling);
+                        }
+                    }
+                }
+            }
+            if (GetColor(node) == Color.Black && sibling != null && GetColor(sibling) == Color.Black)
+            {
+                if (node.ParentNode != null)
+                {
+                    if (sibling == node.ParentNode.LeftNode)
+                    {
+                        if (GetColor(sibling.LeftNode) == Color.Red)
+                        {
+                            var temp = sibling.LeftNode;
+                            sibling.Color = node.ParentNode.Color;
+                            node.ParentNode.Color = Color.Black;
+                            RotateRight(node.ParentNode);
+                            if (temp != null)
+                                temp.Color = Color.Black;
+                        }
+                    }
+                    else
+                    {
+                        if (GetColor(sibling.RightNode) == Color.Red)
+                        {
+                            var temp = sibling.RightNode;
+                            sibling.Color = node.ParentNode.Color;
+                            node.ParentNode.Color = Color.Black;
+                            RotateLeft(node.ParentNode);
+                            if (temp != null)
+                                temp.Color = Color.Black;
+                        }
+                    }
+                }
+                return;
+            }
         }
 
         public override bool Find(int value)
@@ -351,7 +542,6 @@ namespace DataStructures
         {
             Traverse(root);
         }
-
         private void Traverse(Node? node)
         {
             if (node == null)

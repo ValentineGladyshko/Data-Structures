@@ -73,8 +73,13 @@ leftLeaningRedBlackTree.Insert(21);
 leftLeaningRedBlackTree.Traverse();
 Console.WriteLine();
 leftLeaningRedBlackTree.Insert(23);
-
-Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
-Console.WriteLine(leftLeaningRedBlackTree.isValidRedBlackTree());
 leftLeaningRedBlackTree.Traverse();
+Console.WriteLine();
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
+Console.WriteLine(leftLeaningRedBlackTree.InfixTraverse().Count);
+Console.WriteLine(leftLeaningRedBlackTree.isValidRedBlackTree());
+leftLeaningRedBlackTree.Remove(16);
+Console.WriteLine(leftLeaningRedBlackTree.isValidRedBlackTree());
+Console.WriteLine(leftLeaningRedBlackTree.InfixTraverse().Count);
+Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
+leftLeaningRedBlackTree.Traverse();
