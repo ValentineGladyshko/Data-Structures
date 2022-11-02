@@ -7,14 +7,14 @@ using System.Threading;
 Random random = new Random();
 ArrayOperator arrayOperator = new ArrayOperator();
 
-List<AVLTree> AVLTrees = new List<AVLTree>();
-List<BinaryTree> binaryTrees = new List<BinaryTree>();
+List<AVLTree<int>> AVLTrees = new List<AVLTree<int>>();
+List<BinaryTree<int>> binaryTrees = new List<BinaryTree<int>>();
 
 
 Parallel.For(0, 120, i =>
 {
-    AVLTree AVLTree = new AVLTree();
-    BinaryTree binaryTree = new BinaryTree();
+    AVLTree<int> AVLTree = new AVLTree<int>();
+    BinaryTree<int> binaryTree = new BinaryTree<int>();
 
     for (int j = 0; j < 1000000; j++)
     {

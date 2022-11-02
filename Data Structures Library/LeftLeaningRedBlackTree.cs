@@ -11,19 +11,19 @@ namespace DataStructures
         Red,
         Black
     }
-    public class LeftLeaningRedBlackTree : BinaryTree, IBinaryTree
+    public class LeftLeaningRedBlackTree<T> : BinaryTree<T>, IBinaryTree<T> where T : IComparable
     {
         private Node? root = null;
         class Node : INode
         {
-            public int Value { get; set; }
+            public IComparable Value { get; set; }
             public Color Color { get; set; }
             public Node? LeftNode { get; set; }
             public Node? RightNode { get; set; }
             INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
             INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
 
-            public Node(int value)
+            public Node(T value)
             {
                 Value = value;
                 LeftNode = null;
@@ -153,18 +153,18 @@ namespace DataStructures
             return node;
         }
 
-        public override void Insert(int value)
+        public override void Insert(T value)
         {
             root = Insert(value, root);
             root.Color = Color.Black;
         }
-        private Node Insert(int value, Node? node)
+        private Node Insert(T value, Node? node)
         {
             if (node == null)
                 return node = new Node(value);
-            else if (value < node.Value)
+            else if (value.CompareTo(node.Value) < 0)
                 node.LeftNode = Insert(value, node.LeftNode);
-            else if (value > node.Value)
+            else if (value.CompareTo(node.Value) > 0)
                 node.RightNode = Insert(value, node.RightNode);
             else return node;
 
@@ -186,7 +186,7 @@ namespace DataStructures
             return node;
         }
 
-        public override void Remove(int value)
+        public override void Remove(T value)
         {
             if (root == null)
                 return;
@@ -198,9 +198,9 @@ namespace DataStructures
             if (root != null)
                 root.Color = Color.Black;
         }
-        private Node? Remove(int value, Node node)
+        private Node? Remove(T value, Node node)
         {
-            if (value < node.Value)
+            if (value.CompareTo(node.Value) < 0)
             {
                 if (node.LeftNode != null)
                 {
@@ -214,19 +214,19 @@ namespace DataStructures
             {
                 if (GetColor(node.LeftNode) == Color.Red)
                     node = RotateRight(node);
-                if (value == node.Value && (node.RightNode == null))
+                if (value.CompareTo(node.Value) == 0 && (node.RightNode == null))
                     return null;
                 if (node.RightNode != null)
                 {
                     if (GetColor(node.RightNode) == Color.Black && GetColor(node.RightNode.LeftNode) == Color.Black)
                         node = MoveRedRight(node);
                 }
-                if (value == node.Value)
+                if (value.CompareTo(node.Value) == 0)
                 {
-                    int? temp = Minimum(node.RightNode);
+                    IComparable? temp = Minimum(node.RightNode);
                     if (temp != null)
                     {
-                        node.Value = (int)temp;
+                        node.Value = temp;
                         node.RightNode = MinimumDelete(node.RightNode);
                     }
                 }
@@ -266,32 +266,32 @@ namespace DataStructures
             return FixUp(node);
         }
 
-        public override bool Find(int value)
+        public override bool Find(T value)
         {
             return Find(value, root);
         }
 
-        public override int? Minimum()
+        public override T? Minimum()
         {
-            return Minimum(root);
+            return (T?)Minimum(root);
         }        
 
-        public override int? Maximum()
+        public override T? Maximum()
         {
-            return Maximum(root);
+            return (T?)Maximum(root);
         }
 
-        public override List<int> InfixTraverse()
+        public override List<IComparable> InfixTraverse()
         {
             return InfixTraverse(root);
         }
 
-        public override List<int> PrefixTraverse()
+        public override List<IComparable> PrefixTraverse()
         {
             return PrefixTraverse(root);
         }
 
-        public override List<int> PostfixTraverse()
+        public override List<IComparable> PostfixTraverse()
         {
             return PostfixTraverse(root);
         }
@@ -307,18 +307,18 @@ namespace DataStructures
                 return;
             }
 
-            Console.Write(node.Value);
+            Console.Write(node.Value.ToString());
             Console.Write(" ");
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(node.LeftNode.Value);
+                Console.Write(node.LeftNode.Value.ToString());
                 Console.Write(" ");
             }
             if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(node.RightNode.Value);
+                Console.Write(node.RightNode.Value.ToString());
                 Console.Write(" ");
             }
             Console.Write("Color: ");

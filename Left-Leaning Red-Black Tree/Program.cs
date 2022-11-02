@@ -7,7 +7,7 @@ using System.Threading;
 Random random = new Random();
 ArrayOperator arrayOperator = new ArrayOperator();
 
-RedBlackTree leftLeaningRedBlackTree = new RedBlackTree();
+RedBlackTree<int> leftLeaningRedBlackTree = new RedBlackTree<int>();
 //leftLeaningRedBlackTree.Insert(24);
 //leftLeaningRedBlackTree.Traverse();
 //Console.WriteLine();

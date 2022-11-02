@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Collections;
+using System.Data.SqlTypes;
 
 namespace DataStructures
 {
-    public class BinaryTree : IBinaryTree
+    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable
     {
         private Node? root = null;
         class Node : INode
         {
-            public int Value { get; set; }
+            public IComparable Value { get; set; }
             public Node? LeftNode { get; set; }
             public Node? RightNode { get; set; }
             INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
             INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
 
-            public Node(int value)
+            public Node(T value)
             {
                 Value = value;
                 LeftNode = null;
@@ -21,23 +23,23 @@ namespace DataStructures
             }
         }
 
-        public virtual void Insert(int value)
+        public virtual void Insert(T value)
         {
             Insert(value, root);
         }
-        private void Insert(int value, Node? node)
+        private void Insert(T value, Node? node)
         {
             if (root == null)
                 root = new Node(value);
             if (node == null)
                 node = new Node(value);
-            else if (value < node.Value)
+            else if (value.CompareTo(node.Value) < 0)
             {
                 if (node.LeftNode == null)
                     node.LeftNode = new Node(value);
                 else Insert(value, node.LeftNode);
             }
-            else if (value > node.Value)
+            else if (value.CompareTo(node.Value) > 0)
             {
                 if (node.RightNode == null)
                     node.RightNode = new Node(value);
@@ -45,35 +47,35 @@ namespace DataStructures
             }
         }
 
-        public virtual bool Find(int value)
+        public virtual bool Find(T value)
         {
             return Find(value, root);
         }
-        protected bool Find(int value, INode? node)
+        protected bool Find(T value, INode? node)
         {
             if (node == null)
                 return false;
-            if (node.Value == value)
+            if (value.CompareTo(node.Value) == 0)
                 return true;
-            else if (value < node.Value)
+            else if (value.CompareTo(node.Value) < 0)
                 return Find(value, node.LeftNode);
             else
                 return Find(value, node.RightNode);
         }
 
-        public virtual void Remove(int value)
+        public virtual void Remove(T value)
         {
             root = Remove(value, root);
         }
-        private Node? Remove(int value, Node? node)
+        private Node? Remove(T value, Node? node)
         {
             if (node == null)
                 return null;
-            else if (value < node.Value)
+            else if (value.CompareTo(node.Value) < 0)
                 node.LeftNode = Remove(value, node.LeftNode);
-            else if (value > node.Value)
+            else if (value.CompareTo(node.Value) > 0)
                 node.RightNode = Remove(value, node.RightNode);
-            else if (value == node.Value)
+            else if (value.CompareTo(node.Value) == 0)
             {
                 if (node.LeftNode == null && node.RightNode == null)
                     return null;
@@ -109,7 +111,7 @@ namespace DataStructures
             return node;
         }
 
-        private int MinimumDelete(Node node, Node parentNode)
+        private IComparable MinimumDelete(Node node, Node parentNode)
         {
             if (node.LeftNode != null)
                 return MinimumDelete(node.LeftNode, node);
@@ -120,11 +122,11 @@ namespace DataStructures
             }
         }
 
-        public virtual int? Minimum()
+        public virtual T? Minimum()
         {
-            return Minimum(root);
+            return (T?)Minimum(root);
         }
-        protected int? Minimum(INode? node)
+        protected IComparable? Minimum(INode? node)
         {
             if (node == null)
                 return null;
@@ -134,11 +136,11 @@ namespace DataStructures
                 return node.Value;
         }
 
-        public virtual int? Maximum()
+        public virtual T? Maximum()
         {
-            return Maximum(root);
+            return (T?)Maximum(root);
         }
-        protected int? Maximum(INode? node)
+        protected IComparable? Maximum(INode? node)
         {
             if (node == null)
                 return null;
@@ -148,59 +150,59 @@ namespace DataStructures
                 return node.Value;
         }
 
-        public virtual List<int> InfixTraverse()
+        public virtual List<IComparable> InfixTraverse()
         {
             return InfixTraverse(root);
         }
-        protected List<int> InfixTraverse(INode? node)
+        protected List<IComparable> InfixTraverse(INode? node)
         {
-            List<int> result = new List<int>();
+            List<IComparable> result = new List<IComparable>();
 
             if (node == null)
                 return result;
 
             if (node.LeftNode != null)
                 result.AddRange(InfixTraverse(node.LeftNode));
-            result.Add(node.Value);
+            result.Add((T)node.Value);
             if (node.RightNode != null)
                 result.AddRange(InfixTraverse(node.RightNode));
             return result;
         }
 
-        public virtual List<int> PrefixTraverse()
+        public virtual List<IComparable> PrefixTraverse()
         {
             return PrefixTraverse(root);
         }
-        protected List<int> PrefixTraverse(INode? node)
+        protected List<IComparable> PrefixTraverse(INode? node)
         {
-            List<int> result = new List<int>();
+            List<IComparable> result = new List<IComparable>();
 
             if (node == null)
                 return result;
 
             result.Add(node.Value);
             if (node.LeftNode != null)
-                result.AddRange(InfixTraverse(node.LeftNode));
+                result.AddRange(PrefixTraverse(node.LeftNode));
             if (node.RightNode != null)
-                result.AddRange(InfixTraverse(node.RightNode));
+                result.AddRange(PrefixTraverse(node.RightNode));
 
             return result;
         }
 
-        public virtual List<int> PostfixTraverse()
+        public virtual List<IComparable> PostfixTraverse()
         {
             return PostfixTraverse(root);
         }
-        protected List<int> PostfixTraverse(INode? node)
+        protected List<IComparable> PostfixTraverse(INode? node)
         {
-            List<int> result = new List<int>();
+            List<IComparable> result = new List<IComparable>();
             if (node == null)
                 return result;
 
             if (node.LeftNode != null)
-                result.AddRange(InfixTraverse(node.LeftNode));
+                result.AddRange(PostfixTraverse(node.LeftNode));
             if (node.RightNode != null)
-                result.AddRange(InfixTraverse(node.RightNode));
+                result.AddRange(PostfixTraverse(node.RightNode));
             result.Add(node.Value);
 
             return result;
@@ -215,18 +217,18 @@ namespace DataStructures
             if (node == null)
                 return;
 
-            Console.Write(node.Value);
+            Console.Write(node.Value.ToString());
             Console.Write(" ");
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(node.LeftNode.Value);
+                Console.Write(node.LeftNode.Value.ToString());
                 Console.Write(" ");
             }
             if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(node.RightNode.Value);
+                Console.Write(node.RightNode.Value.ToString());
                 Console.Write(" ");
             }
             Console.WriteLine(" ");

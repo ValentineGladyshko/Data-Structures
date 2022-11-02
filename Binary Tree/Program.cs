@@ -7,7 +7,7 @@ using System.Threading;
 Random random = new Random();
 ArrayOperator arrayOperator = new ArrayOperator();
 
-BinaryTree binaryTree = new BinaryTree();
+BinaryTree<int> binaryTree = new BinaryTree<int>();
 binaryTree.Insert(16);
 binaryTree.Insert(12);
 binaryTree.Insert(11);
@@ -34,30 +34,3 @@ Console.WriteLine(arrayOperator.ToString(binaryTree.InfixTraverse()));
 binaryTree.Remove(16);
 binaryTree.Traverse();
 Console.WriteLine(arrayOperator.ToString(binaryTree.InfixTraverse()));
-
-
-//Stopwatch stopwatch = Stopwatch.StartNew();
-//Parallel.For(0, 10000, i =>
-//{
-//    BinaryTree binaryTree = new BinaryTree();
-
-//    for (int j = 0; j < 10000; j++)
-//    {
-//        binaryTree.Insert(random.Next());
-//    }
-//    Console.WriteLine(arrayOperator.IsSorted(binaryTree.InfixTraverse()));
-//});
-//stopwatch.Stop();
-//Console.WriteLine(stopwatch.ElapsedMilliseconds / 1000.0);
-//stopwatch = Stopwatch.StartNew();
-//for (int i = 0; i < 10000; i++)
-//{
-//    BinaryTree binaryTree = new BinaryTree();
-
-//    for (int j = 0; j < 10000; j++)
-//    {
-//        binaryTree.Insert(random.Next());
-//    }
-//    Console.WriteLine(arrayOperator.IsSorted(binaryTree.InfixTraverse()));
-//}
-//Console.WriteLine(stopwatch.ElapsedMilliseconds / 1000.0);

@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class AVLTree : BinaryTree, IBinaryTree
+    public class AVLTree<T> : BinaryTree<T>, IBinaryTree<T> where T : IComparable
     {
         private Node? root = null;
         class Node : INode
         {
-            public int Value { get; set; }
+            public IComparable Value { get; set; }
             public int Height { get; set; }
             public Node? LeftNode { get; set; }
             public Node? RightNode { get; set; }
             INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
             INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
 
-            public Node(int value)
+            public Node(T value)
             {
                 Value = value;
                 Height = 1;
@@ -111,23 +111,23 @@ namespace DataStructures
             }
         }
 
-        public override void Insert(int value)
+        public override void Insert(T value)
         {
             Insert(value, root);
         }
-        private void Insert(int value, Node? node)
+        private void Insert(T value, Node? node)
         {
             if (root == null)
                 root = new Node(value);
             if (node == null)
                 node = new Node(value);
-            else if (value < node.Value)
+            else if (value.CompareTo(node.Value) < 0)
             {
                 if (node.LeftNode == null)                
                     node.LeftNode = new Node(value);               
                 else Insert(value, node.LeftNode);
             }
-            else if (value > node.Value)
+            else if (value.CompareTo(node.Value) > 0)
             {
                 if (node.RightNode == null)
                     node.RightNode = new Node(value);
@@ -136,15 +136,15 @@ namespace DataStructures
             Balance(node);
         }
 
-        public override void Remove(int value)
+        public override void Remove(T value)
         {
             root = Remove(value, root);
         }
-        private Node? Remove(int value, Node? node)
+        private Node? Remove(T value, Node? node)
         {
             if (node == null)
                 return null;
-            else if (value < node.Value)
+            else if (value.CompareTo(node.Value) < 0)
             {
                 if (node.LeftNode == null)
                     return node;
@@ -155,7 +155,7 @@ namespace DataStructures
                     return node;
                 }
             }
-            else if (value > node.Value)
+            else if (value.CompareTo(node.Value) > 0)
             {
                 if (node.RightNode == null)
                     return node;
@@ -166,7 +166,7 @@ namespace DataStructures
                     return node;
                 }
             }
-            else if (value == node.Value)
+            else if (value.CompareTo(node.Value) == 0)
             {
                 if (node.LeftNode == null && node.RightNode == null)
                     return null;
@@ -207,7 +207,7 @@ namespace DataStructures
             return node;
         }
 
-        private int MinimumDelete(Node node, Node parentNode)
+        private IComparable MinimumDelete(Node node, Node parentNode)
         {
             if (node.LeftNode != null)
                 return MinimumDelete(node.LeftNode, node);
@@ -218,7 +218,7 @@ namespace DataStructures
             }
         }
 
-        private int MaximumDelete(Node node, Node parentNode)
+        private IComparable MaximumDelete(Node node, Node parentNode)
         {
             if (node.RightNode != null)
                 return MaximumDelete(node.RightNode, node);
@@ -229,32 +229,32 @@ namespace DataStructures
             }
         }
 
-        public override bool Find(int value)
+        public override bool Find(T value)
         {
             return Find(value, root);
         }
 
-        public override int? Minimum()
+        public override T? Minimum()
         {
-            return Minimum(root);
+            return (T?)Minimum(root);
         }
 
-        public override int? Maximum()
+        public override T? Maximum()
         {
-            return Maximum(root);
+            return (T?)Maximum(root);
         }
 
-        public override List<int> InfixTraverse()
+        public override List<IComparable> InfixTraverse()
         {
             return InfixTraverse(root);
         }
 
-        public override List<int> PrefixTraverse()
+        public override List<IComparable> PrefixTraverse()
         {
             return PrefixTraverse(root);
         }
 
-        public override List<int> PostfixTraverse()
+        public override List<IComparable> PostfixTraverse()
         {
             return PostfixTraverse(root);
         }
@@ -268,18 +268,18 @@ namespace DataStructures
             if (node == null)
                 return;
 
-            Console.Write(node.Value);
+            Console.Write(node.Value.ToString());
             Console.Write(" ");
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(node.LeftNode.Value);
+                Console.Write(node.LeftNode.Value.ToString());
                 Console.Write(" ");
             }
             if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(node.RightNode.Value);
+                Console.Write(node.RightNode.Value.ToString());
                 Console.Write(" ");
             }
             Console.Write("height: ");

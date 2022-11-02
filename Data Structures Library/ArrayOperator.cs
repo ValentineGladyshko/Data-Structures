@@ -6,11 +6,11 @@ namespace DataStructures
     {
         public ArrayOperator()
         { }
-        public bool IsSorted(List<int> array)
+        public bool IsSorted(List<IComparable> array)
         {
             for (int i = 0; i < (array.Count - 1); i++)
             {
-                if (array[i] > array[i + 1])
+                if (array[i].CompareTo(array[i + 1]) > 0)
                 {
                     return false;
                 }
@@ -18,12 +18,12 @@ namespace DataStructures
             return true;
         }
 
-        public string ToString(List<int> array)
+        public string ToString(List<IComparable> array)
         {
             string result = "";
-            foreach (int i in array)
+            foreach (IComparable i in array)
             {
-                result += i;
+                result += i.ToString();
                 result += " ";
             }
             return result;
