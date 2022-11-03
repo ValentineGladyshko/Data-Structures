@@ -118,7 +118,7 @@ namespace DataStructures
             return node;
         }
 
-        public T1? Get(T key)
+        public virtual T1? Get(T key)
         {
             return Get(key, root);
         }
@@ -232,7 +232,7 @@ namespace DataStructures
             return result;
         }
 
-        public List<T1> InfixTraverseValues()
+        public virtual List<T1> InfixTraverseValues()
         {
             return InfixTraverseValues(root);
         }
@@ -252,7 +252,7 @@ namespace DataStructures
             return result;
         }
 
-        public List<T1> PrefixTraverseValues()
+        public virtual List<T1> PrefixTraverseValues()
         {
             return PrefixTraverseValues(root);
         }
@@ -271,7 +271,7 @@ namespace DataStructures
             return result;
         }
 
-        public List<T1> PostfixTraverseValues()
+        public virtual List<T1> PostfixTraverseValues()
         {
             return PostfixTraverseValues(root);
         }

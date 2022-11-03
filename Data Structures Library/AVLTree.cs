@@ -244,6 +244,21 @@ namespace DataStructures
             return Find(key, root);
         }
 
+        public override T1? Get(T key)
+        {
+            return Get(key, root);
+        }
+
+        public override (T, T1)? Minimum()
+        {
+            return Minimum(root);
+        }
+
+        public override (T, T1)? Maximum()
+        {
+            return Maximum(root);
+        }
+
         public override List<IComparable> InfixTraverse()
         {
             return InfixTraverse(root);
@@ -257,6 +272,21 @@ namespace DataStructures
         public override List<IComparable> PostfixTraverse()
         {
             return PostfixTraverse(root);
+        }
+
+        public override List<T1> InfixTraverseValues()
+        {
+            return InfixTraverseValues(root);
+        }
+
+        public override List<T1> PrefixTraverseValues()
+        {
+            return PrefixTraverseValues(root);
+        }
+
+        public override List<T1> PostfixTraverseValues()
+        {
+            return PostfixTraverseValues(root);
         }
 
         public override void Traverse()
