@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public interface INode
+    public interface INode<T, T1> where T : IComparable
     {
-        public IComparable Value { get; set; }
-        public INode? LeftNode { get; set; }
-        public INode? RightNode { get; set; }
+        public T Key { get; set; }
+        public T1 Value { get; set; }
+        public INode<T, T1>? LeftNode { get; set; }
+        public INode<T, T1>? RightNode { get; set; }
     }
 }

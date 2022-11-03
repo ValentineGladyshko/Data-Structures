@@ -4,83 +4,86 @@ using System.Data.SqlTypes;
 
 namespace DataStructures
 {
-    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable
+    public class BinaryTree<T, T1> : IBinaryTree<T, T1> where T : IComparable
     {
-        private Node? root = null;
-        class Node : INode
+        private Node<T, T1>? root = null;
+        class Node<T2, T3> : INode<T2, T3> where T2 : IComparable
         {
-            public IComparable Value { get; set; }
-            public Node? LeftNode { get; set; }
-            public Node? RightNode { get; set; }
-            INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
-            INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
+            public T2 Key { get; set; }
+            public T3 Value { get; set; }
+            public Node<T2, T3>? LeftNode { get; set; }
+            public Node<T2, T3>? RightNode { get; set; }
+            INode<T2, T3>? INode<T2, T3>.LeftNode { get => LeftNode; set => LeftNode = (Node<T2, T3>?)value; }
+            INode<T2, T3>? INode<T2, T3>.RightNode { get => RightNode; set => RightNode = (Node<T2, T3>?)value; }
 
-            public Node(T value)
+            public Node(T2 key, T3 value)
             {
+                Key = key;
                 Value = value;
                 LeftNode = null;
                 RightNode = null;
             }
         }
 
-        public virtual void Insert(T value)
+        public virtual void Insert(T key, T1 value)
         {
-            Insert(value, root);
+            Insert(key, value, root);
         }
-        private void Insert(T value, Node? node)
+        private void Insert(T key, T1 value, Node<T, T1>? node)
         {
             if (root == null)
-                root = new Node(value);
+                root = new Node<T, T1>(key, value);
             if (node == null)
-                node = new Node(value);
-            else if (value.CompareTo(node.Value) < 0)
+                node = new Node<T, T1>(key, value);
+            else if (key.CompareTo(node.Key) < 0)
             {
                 if (node.LeftNode == null)
-                    node.LeftNode = new Node(value);
-                else Insert(value, node.LeftNode);
+                    node.LeftNode = new Node<T, T1>(key, value);
+                else Insert(key, value, node.LeftNode);
             }
-            else if (value.CompareTo(node.Value) > 0)
+            else if (key.CompareTo(node.Key) > 0)
             {
                 if (node.RightNode == null)
-                    node.RightNode = new Node(value);
-                else Insert(value, node.RightNode);
+                    node.RightNode = new Node<T, T1>(key, value);
+                else Insert(key, value, node.RightNode);
             }
         }
 
-        public virtual bool Find(T value)
+        public virtual bool Find(T key)
         {
-            return Find(value, root);
+            return Find(key, root);
         }
-        protected bool Find(T value, INode? node)
+        protected bool Find(T key, INode<T, T1>? node)
         {
             if (node == null)
                 return false;
-            if (value.CompareTo(node.Value) == 0)
+            if (key.CompareTo(node.Key) == 0)
                 return true;
-            else if (value.CompareTo(node.Value) < 0)
-                return Find(value, node.LeftNode);
+            else if (key.CompareTo(node.Key) < 0)
+                return Find(key, node.LeftNode);
             else
-                return Find(value, node.RightNode);
+                return Find(key, node.RightNode);
         }
 
-        public virtual void Remove(T value)
+        public virtual void Remove(T key)
         {
-            root = Remove(value, root);
+            root = Remove(key, root);
         }
-        private Node? Remove(T value, Node? node)
+        private Node<T, T1>? Remove(T key, Node<T, T1>? node)
         {
             if (node == null)
                 return null;
-            else if (value.CompareTo(node.Value) < 0)
-                node.LeftNode = Remove(value, node.LeftNode);
-            else if (value.CompareTo(node.Value) > 0)
-                node.RightNode = Remove(value, node.RightNode);
-            else if (value.CompareTo(node.Value) == 0)
+            else if (key.CompareTo(node.Key) < 0)
+                node.LeftNode = Remove(key, node.LeftNode);
+            else if (key.CompareTo(node.Key) > 0)
+                node.RightNode = Remove(key, node.RightNode);
+            else if (key.CompareTo(node.Key) == 0)
             {
                 if (node.LeftNode == null && node.RightNode == null)
                     return null;
                 else if (node.LeftNode != null && node.RightNode == null)
                 {
+                    node.Key = node.LeftNode.Key;
                     node.Value = node.LeftNode.Value;
                     node.RightNode = node.LeftNode.RightNode;
                     node.LeftNode = node.LeftNode.LeftNode;
@@ -88,6 +91,7 @@ namespace DataStructures
                 }
                 else if (node.LeftNode == null && node.RightNode != null)
                 {
+                    node.Key = node.RightNode.Key;
                     node.Value = node.RightNode.Value;
                     node.LeftNode = node.RightNode.LeftNode;
                     node.RightNode = node.RightNode.RightNode;
@@ -97,13 +101,16 @@ namespace DataStructures
                 {
                     if (node.RightNode.LeftNode == null)
                     {
+                        node.Key = node.RightNode.Key;
                         node.Value = node.RightNode.Value;
                         node.RightNode = node.RightNode.RightNode;
                         return node;
                     }
                     else
                     {
-                        node.Value = MinimumDelete(node.RightNode, node);
+                        var temp = MinimumDelete(node.RightNode, node);
+                        node.Key = temp.Item1;
+                        node.Value = temp.Item2;
                         return node;
                     }
                 }
@@ -111,50 +118,66 @@ namespace DataStructures
             return node;
         }
 
-        private IComparable MinimumDelete(Node node, Node parentNode)
+        public T1? Get(T key)
+        {
+            return Get(key, root);
+        }
+        protected T1? Get(T key, INode<T, T1>? node)
+        {
+            if (node == null)
+                return default;
+            if (key.CompareTo(node.Key) == 0)
+                return node.Value;
+            else if (key.CompareTo(node.Key) < 0)
+                return Get(key, node.LeftNode);
+            else
+                return Get(key, node.RightNode);
+        }
+
+        private (T, T1) MinimumDelete(Node<T, T1> node, Node<T, T1> parentNode)
         {
             if (node.LeftNode != null)
                 return MinimumDelete(node.LeftNode, node);
             else
             {
                 parentNode.LeftNode = node.RightNode;
-                return node.Value;
+                return (node.Key, node.Value);
             }
         }
 
-        public virtual T? Minimum()
+        public virtual (T, T1)? Minimum()
         {
-            return (T?)Minimum(root);
+            return Minimum(root);
         }
-        protected IComparable? Minimum(INode? node)
+        protected (T, T1)? Minimum(INode<T, T1>? node)
         {
             if (node == null)
                 return null;
             if (node.LeftNode != null)
                 return Minimum(node.LeftNode);
             else
-                return node.Value;
+                return (node.Key, node.Value);
         }
 
-        public virtual T? Maximum()
+        public virtual (T, T1)? Maximum()
         {
-            return (T?)Maximum(root);
+            return Maximum(root);
         }
-        protected IComparable? Maximum(INode? node)
+        protected (T, T1)? Maximum(INode<T, T1>? node)
         {
             if (node == null)
                 return null;
             if (node.RightNode != null)
                 return Maximum(node.RightNode);
             else
-                return node.Value;
+                return (node.Key, node.Value);
         }
 
         public virtual List<IComparable> InfixTraverse()
         {
             return InfixTraverse(root);
         }
-        protected List<IComparable> InfixTraverse(INode? node)
+        protected List<IComparable> InfixTraverse(INode<T, T1>? node)
         {
             List<IComparable> result = new List<IComparable>();
 
@@ -163,9 +186,10 @@ namespace DataStructures
 
             if (node.LeftNode != null)
                 result.AddRange(InfixTraverse(node.LeftNode));
-            result.Add((T)node.Value);
+            result.Add(node.Key);
             if (node.RightNode != null)
                 result.AddRange(InfixTraverse(node.RightNode));
+
             return result;
         }
 
@@ -173,14 +197,14 @@ namespace DataStructures
         {
             return PrefixTraverse(root);
         }
-        protected List<IComparable> PrefixTraverse(INode? node)
+        protected List<IComparable> PrefixTraverse(INode<T, T1>? node)
         {
             List<IComparable> result = new List<IComparable>();
 
             if (node == null)
                 return result;
 
-            result.Add(node.Value);
+            result.Add(node.Key);
             if (node.LeftNode != null)
                 result.AddRange(PrefixTraverse(node.LeftNode));
             if (node.RightNode != null)
@@ -193,7 +217,7 @@ namespace DataStructures
         {
             return PostfixTraverse(root);
         }
-        protected List<IComparable> PostfixTraverse(INode? node)
+        protected List<IComparable> PostfixTraverse(INode<T, T1>? node)
         {
             List<IComparable> result = new List<IComparable>();
             if (node == null)
@@ -203,6 +227,65 @@ namespace DataStructures
                 result.AddRange(PostfixTraverse(node.LeftNode));
             if (node.RightNode != null)
                 result.AddRange(PostfixTraverse(node.RightNode));
+            result.Add(node.Key);
+
+            return result;
+        }
+
+        public List<T1> InfixTraverseValues()
+        {
+            return InfixTraverseValues(root);
+        }
+        protected List<T1> InfixTraverseValues(INode<T, T1>? node)
+        {
+            List<T1> result = new List<T1>();
+
+            if (node == null)
+                return result;
+
+            if (node.LeftNode != null)
+                result.AddRange(InfixTraverseValues(node.LeftNode));
+            result.Add(node.Value);
+            if (node.RightNode != null)
+                result.AddRange(InfixTraverseValues(node.RightNode));
+
+            return result;
+        }
+
+        public List<T1> PrefixTraverseValues()
+        {
+            return PrefixTraverseValues(root);
+        }
+        protected List<T1> PrefixTraverseValues(INode<T, T1>? node)
+        {
+            List<T1> result = new List<T1>();
+
+            if (node == null)
+                return result;
+
+            result.Add(node.Value);
+            if (node.LeftNode != null)
+                result.AddRange(InfixTraverseValues(node.LeftNode));
+            if (node.RightNode != null)
+                result.AddRange(InfixTraverseValues(node.RightNode));
+            return result;
+        }
+
+        public List<T1> PostfixTraverseValues()
+        {
+            return PostfixTraverseValues(root);
+        }
+        protected List<T1> PostfixTraverseValues(INode<T, T1>? node)
+        {
+            List<T1> result = new List<T1>();
+
+            if (node == null)
+                return result;
+
+            if (node.LeftNode != null)
+                result.AddRange(InfixTraverseValues(node.LeftNode));
+            if (node.RightNode != null)
+                result.AddRange(InfixTraverseValues(node.RightNode));
             result.Add(node.Value);
 
             return result;
@@ -212,23 +295,28 @@ namespace DataStructures
         {
             Traverse(root);
         }
-        private void Traverse(Node? node)
+        private void Traverse(Node<T, T1>? node)
         {
             if (node == null)
                 return;
 
-            Console.Write(node.Value.ToString());
-            Console.Write(" ");
+            Console.Write(node.Key.ToString());
+            Console.Write(" ");          
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(node.LeftNode.Value.ToString());
+                Console.Write(node.LeftNode.Key.ToString());
                 Console.Write(" ");
             }
             if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(node.RightNode.Value.ToString());
+                Console.Write(node.RightNode.Key.ToString());
+                Console.Write(" ");
+            }
+            if (node.Value != null)
+            {
+                Console.Write(node.Value.ToString());
                 Console.Write(" ");
             }
             Console.WriteLine(" ");

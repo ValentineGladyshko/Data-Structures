@@ -7,20 +7,20 @@ using System.Threading;
 Random random = new Random();
 ArrayOperator arrayOperator = new ArrayOperator();
 
-List<AVLTree<int>> AVLTrees = new List<AVLTree<int>>();
-List<BinaryTree<int>> binaryTrees = new List<BinaryTree<int>>();
+List<AVLTree<int, int>> AVLTrees = new List<AVLTree<int, int>>();
+List<BinaryTree<int, int>> binaryTrees = new List<BinaryTree<int, int>>();
 
 
 Parallel.For(0, 120, i =>
 {
-    AVLTree<int> AVLTree = new AVLTree<int>();
-    BinaryTree<int> binaryTree = new BinaryTree<int>();
+    AVLTree<int, int> AVLTree = new AVLTree<int, int>();
+    BinaryTree<int, int> binaryTree = new BinaryTree<int, int>();
 
     for (int j = 0; j < 1000000; j++)
     {
         int temp = random.Next(100000);
-        AVLTree.Insert(temp);
-        binaryTree.Insert(temp);
+        AVLTree.Insert(temp, temp);
+        binaryTree.Insert(temp, temp);
     }
     AVLTrees.Add(AVLTree);
     binaryTrees.Add(binaryTree);
@@ -53,7 +53,7 @@ Console.WriteLine("Postfix traverse in AVL tree: " + stopwatch.ElapsedMillisecon
 stopwatch.Restart();
 foreach (var AVLTree in AVLTrees)
 {
-    AVLTree.Insert(500000);
+    AVLTree.Insert(500000, 0);
 };
 stopwatch.Stop();
 Console.WriteLine("Insert in AVL tree: " + stopwatch.ElapsedMilliseconds + "ms");
@@ -102,7 +102,7 @@ Console.WriteLine("Postfix traverse in Binary tree: " + stopwatch.ElapsedMillise
 stopwatch.Restart();
 foreach (var binaryTree in binaryTrees)
 {
-    binaryTree.Insert(500000);
+    binaryTree.Insert(500000, 0);
 };
 stopwatch.Stop();
 Console.WriteLine("Insert in Binary tree: " + stopwatch.ElapsedMilliseconds + "ms");

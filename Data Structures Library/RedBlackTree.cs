@@ -9,51 +9,57 @@ using System.Xml.Linq;
 
 namespace DataStructures
 {
-    public class RedBlackTree<T> : BinaryTree<T>, IBinaryTree<T> where T : IComparable
+    public class RedBlackTree<T, T1> : BinaryTree<T, T1>, IBinaryTree<T, T1> where T : IComparable
     {
-        private Node? root = null;
+        private Node<T, T1>? root = null;
 
         private bool left = false;
         private bool right = false;
         private bool leftRight = false;
         private bool rightLeft = false;
 
-        class Node : INode
+        class Node<T2, T3> : INode<T2, T3> where T2 : IComparable
         {
-            public IComparable Value { get; set; }
+            public T2 Key { get; set; }
+            public T3 Value { get; set; }
             public Color Color { get; set; }
-            public Node? ParentNode { get; set; }
-            public Node? LeftNode { get; set; }
-            public Node? RightNode { get; set; }
-            INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
-            INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
+            public Node<T2, T3>? ParentNode { get; set; }
+            public Node<T2, T3>? LeftNode { get; set; }
+            public Node<T2, T3>? RightNode { get; set; }
+            INode<T2, T3>? INode<T2, T3>.LeftNode { get => LeftNode; set => LeftNode = (Node<T2, T3>?)value; }
+            INode<T2, T3>? INode<T2, T3>.RightNode { get => RightNode; set => RightNode = (Node<T2, T3>?)value; }
 
-            public Node(T value)
+            public Node(T2 key, T3 value)
             {
+                Key = key;
                 Value = value;
                 LeftNode = null;
                 RightNode = null;
                 ParentNode = null;
                 Color = Color.Red;
+                Value = value;
             }
-            public Node(T value, Node parentNode)
+            public Node(T2 key, T3 value, Node<T2, T3> parentNode)
             {
+                Key = key;
                 Value = value;
                 LeftNode = null;
                 RightNode = null;
                 ParentNode = parentNode;
                 Color = Color.Red;
             }
-            public Node(T value, Node parentNode, Color color)
+            public Node(T2 key, T3 value, Node<T2, T3> parentNode, Color color)
             {
+                Key = key;
                 Value = value;
                 LeftNode = null;
                 RightNode = null;
                 ParentNode = parentNode;
                 Color = color;
             }
-            public Node(Node node)
+            public Node(Node<T2, T3> node)
             {
+                Key = node.Key;
                 Value = node.Value;
                 LeftNode = node.LeftNode;
                 RightNode = node.RightNode;
@@ -62,14 +68,14 @@ namespace DataStructures
             }
         }
 
-        private Color GetColor(Node? node)
+        private Color GetColor(Node<T, T1>? node)
         {
             if (node == null)
                 return Color.Black;
             else return node.Color;
         }
 
-        private Node? GetSibling(Node node)
+        private Node<T, T1>? GetSibling(Node<T, T1> node)
         {
             if (node.ParentNode == null)
                 return null;
@@ -88,14 +94,15 @@ namespace DataStructures
             }
         }
 
-        private void RotateLeft(Node node)
+        private void RotateLeft(Node<T, T1> node)
         {
             if (node.RightNode != null)
             {
-                Node temp = new Node(node);
+                Node<T, T1> temp = new Node<T, T1>(node);
 
                 if (temp.RightNode != null)
                 {
+                    node.Key = temp.RightNode.Key;
                     node.Value = temp.RightNode.Value;
                     node.Color = temp.RightNode.Color;
                     node.RightNode = temp.RightNode.RightNode;
@@ -122,14 +129,15 @@ namespace DataStructures
             }
         }
 
-        private void RotateRight(Node node)
+        private void RotateRight(Node<T, T1> node)
         {
             if (node.LeftNode != null)
             {
-                Node temp = new Node(node);
+                Node<T, T1> temp = new Node<T, T1>(node);
 
                 if (temp.LeftNode != null)
                 {
+                    node.Key = temp.LeftNode.Key;
                     node.Value = temp.LeftNode.Value;
                     node.Color = temp.LeftNode.Color;
                     node.LeftNode = temp.LeftNode.LeftNode;
@@ -156,32 +164,32 @@ namespace DataStructures
             }
         }
 
-        public override void Insert(T value)
+        public override void Insert(T key, T1 value)
         {
             if (root == null)
             {
-                root = new Node(value);
+                root = new Node<T, T1>(key, value);
                 root.Color = Color.Black;
             }
             else
-                root = Insert(value, root);
+                root = Insert(key, value, root);
         }
-        private Node Insert(T value, Node? node)
+        private Node<T, T1> Insert(T key, T1 value, Node<T, T1>? node)
         {
             bool redConflict = false;
             if (node == null)
-                return new Node(value);
-            else if (value.CompareTo(node.Value) < 0)
+                return new Node<T, T1>(key, value);
+            else if (key.CompareTo(node.Key) < 0)
             {
-                node.LeftNode = Insert(value, node.LeftNode);
+                node.LeftNode = Insert(key, value, node.LeftNode);
                 node.LeftNode.ParentNode = node;
                 if (node != root)
                     if (GetColor(node) == Color.Red && GetColor(node.LeftNode) == Color.Red)
                         redConflict = true;
             }
-            else if (value.CompareTo(node.Value) > 0)
+            else if (key.CompareTo(node.Key) > 0)
             {
-                node.RightNode = Insert(value, node.RightNode);
+                node.RightNode = Insert(key, value, node.RightNode);
                 node.RightNode.ParentNode = node;
                 if (node != root)
                 {
@@ -295,14 +303,14 @@ namespace DataStructures
 
             return true;
         }
-        private void isValidRedBlackTree(Node? node, ArrayList blackDepthList)
+        private void isValidRedBlackTree(Node<T, T1>? node, ArrayList blackDepthList)
         {
             if (node != null)
             {
                 if (node.LeftNode == null || node.RightNode == null)
                 {
                     int blackDepth = 1;
-                    Node temp = node;
+                    Node<T, T1> temp = node;
                     while (temp.ParentNode != null)
                     {
                         if (GetColor(temp) == Color.Black)
@@ -321,21 +329,21 @@ namespace DataStructures
 
         }
 
-        public override void Remove(T value)
+        public override void Remove(T key)
         {
-            Remove(value, root);
+            Remove(key, root);
             if (root != null)
                 root.Color = Color.Black;
         }
-        private void Remove(T value, Node? node)
+        private void Remove(T key, Node<T, T1>? node)
         {
             if (node == null)
                 return;
-            else if (value.CompareTo(node.Value) < 0)
-                Remove(value, node.LeftNode);
-            else if (value.CompareTo(node.Value) > 0)
-                Remove(value, node.RightNode);
-            else if (value.CompareTo(node.Value) == 0)
+            else if (key.CompareTo(node.Key) < 0)
+                Remove(key, node.LeftNode);
+            else if (key.CompareTo(node.Key) > 0)
+                Remove(key, node.RightNode);
+            else if (key.CompareTo(node.Key) == 0)
             {
                 if (node.LeftNode == null && node.RightNode == null)
                 {
@@ -351,6 +359,7 @@ namespace DataStructures
                 }
                 else if (node.LeftNode != null && node.RightNode == null)
                 {
+                    node.Key = node.LeftNode.Key;
                     node.Value = node.LeftNode.Value;
                     var color = node.LeftNode.Color;
                     node.RightNode = node.LeftNode.RightNode;
@@ -358,10 +367,11 @@ namespace DataStructures
                     if (node.LeftNode != null)
                         FixUp(node.LeftNode);
                     else
-                        FixUp(new Node((T)node.Value, node, color));
+                        FixUp(new Node<T, T1>(node.Key, node.Value, node, color));
                 }
                 else if (node.LeftNode == null && node.RightNode != null)
                 {
+                    node.Key = node.RightNode.Key;
                     node.Value = node.RightNode.Value;
                     var color = node.RightNode.Color;
                     node.LeftNode = node.RightNode.LeftNode;
@@ -369,23 +379,25 @@ namespace DataStructures
                     if (node.RightNode != null)
                         FixUp(node.RightNode);
                     else
-                        FixUp(new Node((T)node.Value, node, color));
+                        FixUp(new Node<T, T1>(node.Key, node.Value, node, color));
                 }
                 else if (node.LeftNode != null && node.RightNode != null)
                 {
                     if (node.RightNode.LeftNode == null)
                     {
+                        node.Key = node.RightNode.Key;
                         node.Value = node.RightNode.Value;
                         var color = node.RightNode.Color;
                         node.RightNode = node.RightNode.RightNode;
                         if (node.RightNode != null)
                             FixUp(node.RightNode);
                         else
-                            FixUp(new Node((T)node.Value, node, color));
+                            FixUp(new Node<T, T1>(node.Key, node.Value, node, color));
                     }
                     else
                     {
                         var temp = MaximumDelete(node.LeftNode, node);
+                        node.Key = temp.Key;
                         node.Value = temp.Value;
                         FixUp(temp);
                 }
@@ -393,7 +405,7 @@ namespace DataStructures
             }
         }
 
-        private Node MaximumDelete(Node node, Node parentNode)
+        private Node<T, T1> MaximumDelete(Node<T, T1> node, Node<T, T1> parentNode)
         {
             if (node.RightNode != null)
                 return MaximumDelete(node.RightNode, node);
@@ -404,7 +416,7 @@ namespace DataStructures
             }
         }
 
-        private void FixUp(Node node)
+        private void FixUp(Node<T, T1> node)
         {
             if (GetColor(node) == Color.Red && node.RightNode == null && node.LeftNode == null)
                 return;
@@ -508,68 +520,48 @@ namespace DataStructures
             }
         }
 
-        public override bool Find(T value)
+        public override bool Find(T key)
         {
-            return Find(value, root);
-        }
-
-        public override T? Minimum()
-        {
-            return (T?)Minimum(root);
-        }
-
-        public override T? Maximum()
-        {
-            return (T?)Maximum(root);
-        }
-
-        public override List<IComparable> InfixTraverse()
-        {
-            return InfixTraverse(root);
-        }
-
-        public override List<IComparable> PrefixTraverse()
-        {
-            return PrefixTraverse(root);
-        }
-
-        public override List<IComparable> PostfixTraverse()
-        {
-            return PostfixTraverse(root);
+            return Find(key, root);
         }
 
         public override void Traverse()
         {
             Traverse(root);
         }
-        private void Traverse(Node? node)
+        private void Traverse(Node<T, T1>? node)
         {
             if (node == null)
             {
                 return;
             }
 
-            Console.Write(node.Value.ToString());
+            Console.Write(node.Key.ToString());
             Console.Write(" ");
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(node.LeftNode.Value.ToString());
+                Console.Write(node.LeftNode.Key.ToString());
                 Console.Write(" ");
             }
             if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(node.RightNode.Value.ToString());
+                Console.Write(node.RightNode.Key.ToString());
                 Console.Write(" ");
             }
             Console.Write("Color: ");
             Console.Write(node.Color);
             Console.Write(" ");
+            if (node.Value != null)
+            {
+                Console.Write(node.Value.ToString());
+                Console.Write(" ");
+            }
             if (node.ParentNode != null)
             {
                 Console.Write("parent: ");
-                Console.Write(node.ParentNode.Value.ToString());
+                Console.Write(node.ParentNode.Key.ToString());
                 Console.Write(" ");
             }
             Console.WriteLine(" ");

@@ -6,27 +6,30 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class AVLTree<T> : BinaryTree<T>, IBinaryTree<T> where T : IComparable
+    public class AVLTree<T, T1> : BinaryTree<T, T1>, IBinaryTree<T, T1> where T : IComparable
     {
-        private Node? root = null;
-        class Node : INode
+        private Node<T, T1>? root = null;
+        class Node<T2, T3> : INode<T2, T3> where T2 : IComparable
         {
-            public IComparable Value { get; set; }
+            public T2 Key { get; set; }
+            public T3 Value { get; set; }
             public int Height { get; set; }
-            public Node? LeftNode { get; set; }
-            public Node? RightNode { get; set; }
-            INode? INode.LeftNode { get => LeftNode; set => LeftNode = (Node?)value; }
-            INode? INode.RightNode { get => RightNode; set => RightNode = (Node?)value; }
+            public Node<T2, T3>? LeftNode { get; set; }
+            public Node<T2, T3>? RightNode { get; set; }
+            INode<T2, T3>? INode<T2, T3>.LeftNode { get => LeftNode; set => LeftNode = (Node<T2, T3>?)value; }
+            INode<T2, T3>? INode<T2, T3>.RightNode { get => RightNode; set => RightNode = (Node<T2, T3>?)value; }
 
-            public Node(T value)
+            public Node(T2 key, T3 value)
             {
+                Key = key;
                 Value = value;
                 Height = 1;
                 LeftNode = null;
                 RightNode = null;
             }
-            public Node(Node node)
+            public Node(Node<T2, T3> node)
             {
+                Key = node.Key;
                 Value = node.Value;
                 Height = node.Height;
                 LeftNode = node.LeftNode;
@@ -34,7 +37,7 @@ namespace DataStructures
             }
         }       
 
-        private int BalanceFactor(Node node)
+        private int BalanceFactor(Node<T, T1> node)
         {
             if (node.RightNode != null && node.LeftNode != null)
                 return node.RightNode.Height - node.LeftNode.Height;
@@ -45,7 +48,7 @@ namespace DataStructures
             else return 0;
         }
 
-        private void FixHeight(Node node)
+        private void FixHeight(Node<T, T1> node)
         {
             if (node.LeftNode != null && node.RightNode != null)
                 node.Height = (node.LeftNode.Height > node.RightNode.Height ? node.LeftNode.Height : node.RightNode.Height) + 1;
@@ -57,14 +60,15 @@ namespace DataStructures
                 node.Height = 1;
         }
 
-        private void RotateLeft(Node node)
+        private void RotateLeft(Node<T, T1> node)
         {
             if (node.RightNode != null)
             {
-                Node temp = new Node(node);
+                Node<T, T1> temp = new Node<T, T1>(node);
 
                 if (temp.RightNode != null)
                 {
+                    node.Key = temp.RightNode.Key;
                     node.Value = temp.RightNode.Value;
                     node.RightNode = temp.RightNode.RightNode;
                     temp.RightNode = temp.RightNode.LeftNode;
@@ -75,14 +79,15 @@ namespace DataStructures
             }
         }
 
-        private void RotateRight(Node node)
+        private void RotateRight(Node<T, T1> node)
         {
             if (node.LeftNode != null)
             {
-                Node temp = new Node(node);
+                Node<T, T1> temp = new Node<T, T1>(node);
 
                 if (temp.LeftNode != null)
                 {
+                    node.Key = temp.LeftNode.Key;
                     node.Value = temp.LeftNode.Value;
                     node.LeftNode = temp.LeftNode.LeftNode;
                     temp.LeftNode = temp.LeftNode.RightNode;
@@ -93,7 +98,7 @@ namespace DataStructures
             }
         }
 
-        private void Balance(Node node)
+        private void Balance(Node<T, T1> node)
         {
             FixHeight(node);
             if (BalanceFactor(node) == 2 && node.RightNode != null)
@@ -111,67 +116,68 @@ namespace DataStructures
             }
         }
 
-        public override void Insert(T value)
+        public override void Insert(T key, T1 value)
         {
-            Insert(value, root);
+            Insert(key, value, root);
         }
-        private void Insert(T value, Node? node)
+        private void Insert(T key, T1 value, Node<T, T1>? node)
         {
             if (root == null)
-                root = new Node(value);
+                root = new Node<T, T1>(key, value);
             if (node == null)
-                node = new Node(value);
-            else if (value.CompareTo(node.Value) < 0)
+                node = new Node<T, T1>(key, value);
+            else if (key.CompareTo(node.Key) < 0)
             {
                 if (node.LeftNode == null)                
-                    node.LeftNode = new Node(value);               
-                else Insert(value, node.LeftNode);
+                    node.LeftNode = new Node<T, T1>(key, value);               
+                else Insert(key, value, node.LeftNode);
             }
-            else if (value.CompareTo(node.Value) > 0)
+            else if (key.CompareTo(node.Key) > 0)
             {
                 if (node.RightNode == null)
-                    node.RightNode = new Node(value);
-                else Insert(value, node.RightNode);
+                    node.RightNode = new Node<T, T1>(key, value);
+                else Insert(key, value, node.RightNode);
             }
             Balance(node);
         }
 
-        public override void Remove(T value)
+        public override void Remove(T key)
         {
-            root = Remove(value, root);
+            root = Remove(key, root);
         }
-        private Node? Remove(T value, Node? node)
+        private Node<T, T1>? Remove(T key, Node<T, T1>? node)
         {
             if (node == null)
                 return null;
-            else if (value.CompareTo(node.Value) < 0)
+            else if (key.CompareTo(node.Key) < 0)
             {
                 if (node.LeftNode == null)
                     return node;
                 else
                 {
-                    node.LeftNode = Remove(value, node.LeftNode);
+                    node.LeftNode = Remove(key, node.LeftNode);
                     Balance(node);
                     return node;
                 }
             }
-            else if (value.CompareTo(node.Value) > 0)
+            else if (key.CompareTo(node.Key) > 0)
             {
                 if (node.RightNode == null)
                     return node;
                 else
                 {
-                    node.RightNode = Remove(value, node.RightNode);
+                    node.RightNode = Remove(key, node.RightNode);
                     Balance(node);
                     return node;
                 }
             }
-            else if (value.CompareTo(node.Value) == 0)
+            else if (key.CompareTo(node.Key) == 0)
             {
                 if (node.LeftNode == null && node.RightNode == null)
                     return null;
                 else if (node.LeftNode != null && node.RightNode == null)
                 {
+                    node.Key = node.LeftNode.Key;
                     node.Value = node.LeftNode.Value;
                     node.RightNode = node.LeftNode.RightNode;
                     node.LeftNode = node.LeftNode.LeftNode;
@@ -180,6 +186,7 @@ namespace DataStructures
                 }
                 else if (node.LeftNode == null && node.RightNode != null)
                 {
+                    node.Key = node.RightNode.Key;
                     node.Value = node.RightNode.Value;
                     node.LeftNode = node.RightNode.LeftNode;
                     node.RightNode = node.RightNode.RightNode;
@@ -190,6 +197,7 @@ namespace DataStructures
                 {
                     if (node.LeftNode.RightNode == null)
                     {
+                        node.Key = node.LeftNode.Key;
                         node.Value = node.LeftNode.Value;
                         node.LeftNode = node.LeftNode.LeftNode;
                         Balance(node);
@@ -197,7 +205,9 @@ namespace DataStructures
                     }
                     else
                     {
-                        node.Value = MaximumDelete(node.LeftNode, node);
+                        var temp = MaximumDelete(node.LeftNode, node);
+                        node.Key = temp.Item1;
+                        node.Value = temp.Item2;
                         Balance(node.LeftNode);
                         Balance(node);
                         return node;
@@ -207,41 +217,31 @@ namespace DataStructures
             return node;
         }
 
-        private IComparable MinimumDelete(Node node, Node parentNode)
+        private (T, T1) MinimumDelete(Node<T, T1> node, Node<T, T1> parentNode)
         {
             if (node.LeftNode != null)
                 return MinimumDelete(node.LeftNode, node);
             else
             {
                 parentNode.LeftNode = node.RightNode;
-                return node.Value;
+                return (node.Key, node.Value);
             }
         }
 
-        private IComparable MaximumDelete(Node node, Node parentNode)
+        private (T, T1) MaximumDelete(Node<T, T1> node, Node<T, T1> parentNode)
         {
             if (node.RightNode != null)
                 return MaximumDelete(node.RightNode, node);
             else
             {
                 parentNode.RightNode = node.LeftNode;
-                return node.Value;
+                return (node.Key, node.Value);
             }
         }
 
-        public override bool Find(T value)
+        public override bool Find(T key)
         {
-            return Find(value, root);
-        }
-
-        public override T? Minimum()
-        {
-            return (T?)Minimum(root);
-        }
-
-        public override T? Maximum()
-        {
-            return (T?)Maximum(root);
+            return Find(key, root);
         }
 
         public override List<IComparable> InfixTraverse()
@@ -263,23 +263,28 @@ namespace DataStructures
         {
             Traverse(root);
         }
-        private void Traverse(Node? node)
+        private void Traverse(Node<T, T1>? node)
         {
             if (node == null)
                 return;
 
-            Console.Write(node.Value.ToString());
+            Console.Write(node.Key.ToString());
             Console.Write(" ");
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
-                Console.Write(node.LeftNode.Value.ToString());
+                Console.Write(node.LeftNode.Key.ToString());
                 Console.Write(" ");
             }
             if (node.RightNode != null)
             {
                 Console.Write("right: ");
-                Console.Write(node.RightNode.Value.ToString());
+                Console.Write(node.RightNode.Key.ToString());
+                Console.Write(" ");
+            }
+            if (node.Value != null)
+            {
+                Console.Write(node.Value.ToString());
                 Console.Write(" ");
             }
             Console.Write("height: ");
