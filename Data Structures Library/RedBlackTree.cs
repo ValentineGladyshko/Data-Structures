@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Xml.Linq;
 
 namespace DataStructures
 {
@@ -323,6 +324,12 @@ namespace DataStructures
 
         public override void Remove(T key)
         {
+            if (root != null && root.LeftNode == null && root.RightNode == null)
+                if (key.CompareTo(root.Key) == 0)
+                {
+                    root = null;
+                    return;
+                }
             Remove(key, root);
             if (root != null)
                 root.Color = Color.Black;
