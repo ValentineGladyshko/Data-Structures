@@ -3,7 +3,7 @@ using DataStructures;
 namespace Data_Structures_Library_Test
 {
     [TestFixture]
-    public class Tests
+    public class BinaryTreeTest
     {
         private BinaryTree<int, int> _binaryTree;
         [SetUp]
@@ -15,28 +15,28 @@ namespace Data_Structures_Library_Test
         [Test]
         public void Find_FindInEmptyTree_ReturnFalse()
         {
-            Assert.IsFalse(_binaryTree.Find(0));
+            Assert.That(_binaryTree.Find(0), Is.False);
         }
 
         [Test]
         public void Find_FindValueSameAsInsert_ReturnTrue()
         {
             _binaryTree.Insert(0, 0);
-            Assert.IsTrue(_binaryTree.Find(0));
+            Assert.That(_binaryTree.Find(0), Is.True);
         }
 
         [Test]
         public void Find_FindValueNotSameAsInsert_ReturnFalse()
         {
             _binaryTree.Insert(0, 0);
-            Assert.IsFalse(_binaryTree.Find(1));
+            Assert.That(_binaryTree.Find(1), Is.False);
         }
 
         [Test]
         public void Insert_InsertIntoEmptyTree_TreeContainsElement()
         {
             _binaryTree.Insert(0, 0);
-            Assert.IsTrue(_binaryTree.Find(0));
+            Assert.That(_binaryTree.Find(0), Is.True);
         }
 
         [Test]
@@ -44,8 +44,8 @@ namespace Data_Structures_Library_Test
         {
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(1, 0);
-            Assert.IsTrue(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(1));
+            Assert.That(_binaryTree.Find(0), Is.True);
+            Assert.That(_binaryTree.Find(1), Is.True);
         }
 
         [Test]
@@ -53,8 +53,11 @@ namespace Data_Structures_Library_Test
         {
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(-1, 0);
-            Assert.IsTrue(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(-1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.True);
+                Assert.That(_binaryTree.Find(-1), Is.True);
+            });
         }
 
         [Test]
@@ -63,9 +66,12 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(1, 0);
             _binaryTree.Insert(2, 0);
-            Assert.IsTrue(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(1));
-            Assert.IsTrue(_binaryTree.Find(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.True);
+                Assert.That(_binaryTree.Find(1), Is.True);
+                Assert.That(_binaryTree.Find(2), Is.True);
+            });
         }
 
         [Test]
@@ -74,16 +80,19 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(-1, 0);
             _binaryTree.Insert(-2, 0);
-            Assert.IsTrue(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(-1));
-            Assert.IsTrue(_binaryTree.Find(-2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.True);
+                Assert.That(_binaryTree.Find(-1), Is.True);
+                Assert.That(_binaryTree.Find(-2), Is.True);
+            });
         }
 
         [Test]
         public void Remove_RemoveFromEmptyTree_NothingHappens()
         {
             _binaryTree.Remove(0);
-            Assert.IsFalse(_binaryTree.Find(0));
+            Assert.That(_binaryTree.Find(0), Is.False);
         }
 
         [Test]
@@ -91,7 +100,7 @@ namespace Data_Structures_Library_Test
         {
             _binaryTree.Insert(0, 0);
             _binaryTree.Remove(0);
-            Assert.IsFalse(_binaryTree.Find(0));
+            Assert.That(_binaryTree.Find(0), Is.False);
         }
 
         [Test]
@@ -99,7 +108,7 @@ namespace Data_Structures_Library_Test
         {
             _binaryTree.Insert(0, 0);
             _binaryTree.Remove(1);
-            Assert.IsTrue(_binaryTree.Find(0));
+            Assert.That(_binaryTree.Find(0), Is.True);
         }
 
         [Test]
@@ -108,8 +117,11 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(-1, 0);
             _binaryTree.Remove(-1);
-            Assert.IsTrue(_binaryTree.Find(0));
-            Assert.IsFalse(_binaryTree.Find(-1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.True);
+                Assert.That(_binaryTree.Find(-1), Is.False);
+            });
         }
 
         [Test]
@@ -118,7 +130,11 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(1, 0);
             _binaryTree.Remove(1);
-            Assert.IsTrue(_binaryTree.Find(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.True);
+                Assert.That(_binaryTree.Find(1), Is.False);
+            });
         }
 
         [Test]
@@ -127,8 +143,11 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(-1, 0);
             _binaryTree.Remove(0);
-            Assert.IsFalse(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(-1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.False);
+                Assert.That(_binaryTree.Find(-1), Is.True);
+            });
         }
 
         [Test]
@@ -137,8 +156,11 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(0, 0);
             _binaryTree.Insert(1, 0);
             _binaryTree.Remove(0);
-            Assert.IsFalse(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.False);
+                Assert.That(_binaryTree.Find(1), Is.True);
+            });
         }
 
         [Test]
@@ -148,9 +170,12 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(1, 0);
             _binaryTree.Insert(-1, 0);
             _binaryTree.Remove(0);
-            Assert.IsFalse(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(1));
-            Assert.IsTrue(_binaryTree.Find(-1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.False);
+                Assert.That(_binaryTree.Find(1), Is.True);
+                Assert.That(_binaryTree.Find(-1), Is.True);
+            });
         }
 
         [Test]
@@ -161,10 +186,13 @@ namespace Data_Structures_Library_Test
             _binaryTree.Insert(1, 0);
             _binaryTree.Insert(-1, 0);
             _binaryTree.Remove(0);
-            Assert.IsFalse(_binaryTree.Find(0));
-            Assert.IsTrue(_binaryTree.Find(1));
-            Assert.IsTrue(_binaryTree.Find(2));
-            Assert.IsTrue(_binaryTree.Find(-1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_binaryTree.Find(0), Is.False);
+                Assert.That(_binaryTree.Find(1), Is.True);
+                Assert.That(_binaryTree.Find(2), Is.True);
+                Assert.That(_binaryTree.Find(-1), Is.True);
+            });
         }
 
         [Test]
@@ -453,10 +481,12 @@ namespace Data_Structures_Library_Test
         [Test]
         public void Traverse_TraverseInTree_NoExeptions()
         {
+            var stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
             _binaryTree.Insert(0, 2);
             _binaryTree.Insert(1, 3);
             _binaryTree.Insert(-1, 4);
-            Assert.DoesNotThrow(() => _binaryTree.Traverse());  
+            Assert.DoesNotThrow(() => _binaryTree.Traverse());
         }
     }
 }
