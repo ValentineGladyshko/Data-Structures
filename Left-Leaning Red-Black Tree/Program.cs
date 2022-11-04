@@ -78,7 +78,7 @@ Console.WriteLine();
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));
 Console.WriteLine(leftLeaningRedBlackTree.InfixTraverse().Count);
 Console.WriteLine(leftLeaningRedBlackTree.isValidRedBlackTree());
-leftLeaningRedBlackTree.Remove(14);
+var t = leftLeaningRedBlackTree.Get(140);
 Console.WriteLine(leftLeaningRedBlackTree.isValidRedBlackTree());
 Console.WriteLine(leftLeaningRedBlackTree.InfixTraverse().Count);
 Console.WriteLine(arrayOperator.ToString(leftLeaningRedBlackTree.InfixTraverse()));

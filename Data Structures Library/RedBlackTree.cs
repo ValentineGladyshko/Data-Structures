@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Collections;
 
 namespace DataStructures
 {
@@ -318,7 +311,6 @@ namespace DataStructures
                         temp = temp.ParentNode;
                     }
                     blackDepthList.Add(blackDepth);
-
                 }
                 if (node.LeftNode != null)
                     isValidRedBlackTree(node.LeftNode, blackDepthList);
@@ -400,8 +392,8 @@ namespace DataStructures
                         node.Key = temp.Key;
                         node.Value = temp.Value;
                         FixUp(temp);
+                    }
                 }
-            }
             }
         }
 

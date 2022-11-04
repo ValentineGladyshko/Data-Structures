@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataStructures
+﻿namespace DataStructures
 {
     public class AVLTree<T, T1> : BinaryTree<T, T1>, IBinaryTree<T, T1> where T : IComparable
     {
@@ -35,7 +29,7 @@ namespace DataStructures
                 LeftNode = node.LeftNode;
                 RightNode = node.RightNode;
             }
-        }       
+        }
 
         private int BalanceFactor(Node<T, T1> node)
         {
@@ -128,8 +122,8 @@ namespace DataStructures
                 node = new Node<T, T1>(key, value);
             else if (key.CompareTo(node.Key) < 0)
             {
-                if (node.LeftNode == null)                
-                    node.LeftNode = new Node<T, T1>(key, value);               
+                if (node.LeftNode == null)
+                    node.LeftNode = new Node<T, T1>(key, value);
                 else Insert(key, value, node.LeftNode);
             }
             else if (key.CompareTo(node.Key) > 0)

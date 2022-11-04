@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AVL Tree", "AVL Tree\AVL Tr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data Structures Library", "Data Structures Library\Data Structures Library.csproj", "{64961F6D-7EED-415E-BA97-2CD92BD4D768}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Left-Leaning Red-Black Tree", "Left-Leaning Red-Black Tree\Left-Leaning Red-Black Tree.csproj", "{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Left-Leaning Red-Black Tree", "Left-Leaning Red-Black Tree\Left-Leaning Red-Black Tree.csproj", "{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Structures Library Test", "Data Structures Library Test\Data Structures Library Test.csproj", "{3653A488-6997-4834-AB25-2C79D4A1CE19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E87BF2-6BA7-4718-91FE-49C71EEA27DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3653A488-6997-4834-AB25-2C79D4A1CE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3653A488-6997-4834-AB25-2C79D4A1CE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3653A488-6997-4834-AB25-2C79D4A1CE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3653A488-6997-4834-AB25-2C79D4A1CE19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

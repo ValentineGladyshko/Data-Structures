@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Data.SqlTypes;
-
-namespace DataStructures
+﻿namespace DataStructures
 {
     public class BinaryTree<T, T1> : IBinaryTree<T, T1> where T : IComparable
     {
@@ -301,7 +297,7 @@ namespace DataStructures
                 return;
 
             Console.Write(node.Key.ToString());
-            Console.Write(" ");          
+            Console.Write(" ");
             if (node.LeftNode != null)
             {
                 Console.Write("left: ");
