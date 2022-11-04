@@ -3,7 +3,7 @@ using DataStructures;
 namespace Data_Structures_Library_Test
 {
     [TestFixture]
-    public class BinaryTreeTest
+    public class BinaryTreeTests
     {
         private BinaryTree<int, int> _binaryTree;
         [SetUp]
