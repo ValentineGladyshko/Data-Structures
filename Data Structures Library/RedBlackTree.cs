@@ -122,6 +122,41 @@ namespace DataStructures
                 }
             }
         }
+        private void RotateLeft(Node<T, T1> node, Node<T, T1> deletedNode)
+        {
+            if (node.RightNode != null)
+            {
+                Node<T, T1> temp = new Node<T, T1>(node);
+
+                if (temp.RightNode != null)
+                {
+                    node.Key = temp.RightNode.Key;
+                    node.Value = temp.RightNode.Value;
+                    node.Color = temp.RightNode.Color;
+                    node.RightNode = temp.RightNode.RightNode;
+                    temp.RightNode = temp.RightNode.LeftNode;
+                    node.LeftNode = temp;
+                    deletedNode.ParentNode = temp;
+
+                    if (node.RightNode != null)
+                    {
+                        node.RightNode.ParentNode = node;
+                    }
+                    if (node.LeftNode != null)
+                    {
+                        node.LeftNode.ParentNode = node;
+                    }
+                    if (temp.RightNode != null)
+                    {
+                        temp.RightNode.ParentNode = temp;
+                    }
+                    if (temp.LeftNode != null)
+                    {
+                        temp.LeftNode.ParentNode = temp;
+                    }
+                }
+            }
+        }
 
         private void RotateRight(Node<T, T1> node)
         {
@@ -137,6 +172,42 @@ namespace DataStructures
                     node.LeftNode = temp.LeftNode.LeftNode;
                     temp.LeftNode = temp.LeftNode.RightNode;
                     node.RightNode = temp;
+
+                    if (node.RightNode != null)
+                    {
+                        node.RightNode.ParentNode = node;
+                    }
+                    if (node.LeftNode != null)
+                    {
+                        node.LeftNode.ParentNode = node;
+                    }
+                    if (temp.RightNode != null)
+                    {
+                        temp.RightNode.ParentNode = temp;
+                    }
+                    if (temp.LeftNode != null)
+                    {
+                        temp.LeftNode.ParentNode = temp;
+                    }
+                }
+            }
+        }
+
+        private void RotateRight(Node<T, T1> node, Node<T, T1> deletedNode)
+        {
+            if (node.LeftNode != null)
+            {
+                Node<T, T1> temp = new Node<T, T1>(node);
+
+                if (temp.LeftNode != null)
+                {
+                    node.Key = temp.LeftNode.Key;
+                    node.Value = temp.LeftNode.Value;
+                    node.Color = temp.LeftNode.Color;
+                    node.LeftNode = temp.LeftNode.LeftNode;
+                    temp.LeftNode = temp.LeftNode.RightNode;
+                    node.RightNode = temp;
+                    deletedNode.ParentNode = temp;
 
                     if (node.RightNode != null)
                     {
@@ -282,6 +353,8 @@ namespace DataStructures
 
         public bool isValidRedBlackTree()
         {
+            if (root == null)
+                return true;
             ArrayList blackDepthList = new();
             isValidRedBlackTree(root, blackDepthList);
 
@@ -382,14 +455,14 @@ namespace DataStructures
                 }
                 else if (node.LeftNode != null && node.RightNode != null)
                 {
-                    if (node.RightNode.LeftNode == null)
+                    if (node.LeftNode.RightNode == null)
                     {
-                        node.Key = node.RightNode.Key;
-                        node.Value = node.RightNode.Value;
-                        var color = node.RightNode.Color;
-                        node.RightNode = node.RightNode.RightNode;
-                        if (node.RightNode != null)
-                            FixUp(node.RightNode);
+                        node.Key = node.LeftNode.Key;
+                        node.Value = node.LeftNode.Value;
+                        var color = node.LeftNode.Color;
+                        node.LeftNode = node.LeftNode.LeftNode;
+                        if (node.LeftNode != null)
+                            FixUp(node.LeftNode);
                         else
                             FixUp(new Node<T, T1>(node.Key, node.Value, node, color));
                     }
@@ -447,13 +520,23 @@ namespace DataStructures
                     node.ParentNode.Color = Color.Black;
                     if (sibling == node.ParentNode.LeftNode)
                     {
-                        RotateRight(node.ParentNode);
-                        FixUp(node.ParentNode);
+                        var parentNode = node.ParentNode;
+                        RotateRight(node.ParentNode, node);
+                        Traverse();
+                        var sibling2 = GetSibling(node);
+                        if (sibling2 != null)
+                            sibling2.Color = Color.Red;
+                        FixUp(parentNode);
                     }
                     else
                     {
-                        RotateLeft(node.ParentNode);
-                        FixUp(node.ParentNode);
+                        var parentNode = node.ParentNode;
+                        RotateLeft(node.ParentNode, node);
+                        Traverse();
+                        var sibling2 = GetSibling(node);
+                        if (sibling2 != null)
+                            sibling2.Color = Color.Red;
+                        FixUp(parentNode);
                     }
                 }
                 return;
